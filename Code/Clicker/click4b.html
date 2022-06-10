@@ -17,6 +17,14 @@
             border: 1px solid #d3d3d3;
             background-color: #0d0d0c;
         }
+        img {
+            pointer-events: none;
+            /* doing this makes sure .elementFromPoint 
+               do not acquires the image cursor object */
+            position: absolute;
+        }
+        /* makes the cursor invisible */
+        *{cursor: none;}
     </style>
 </head>
 
@@ -25,7 +33,75 @@
         var myGamePiece;
         var counter = 0;
         var mx, my;
-
+        <img id="cursor" src="https://media.geeksforgeeks.org/wp-content/uploads/20200319212118/cursor2.png" 
+         width="15" height="20" />
+        
+        var x, y;
+        var px, py;
+        px = py = 0;
+        // Image of cursor
+        var cursor = document.getElementById("cursor"); 
+  
+        /* mutex is used to avoid multiple click event from
+           firing at the same time due to different position
+           of image cursor and actual cursor 
+           Using mutex avoid any conflicts if original cursor and
+           image cursor are both on a clickable element
+           This makes sure only 1 click event is triggered at a time*/
+             
+        var mutex = false;
+  
+        /*
+         The following event is selecting the element
+         on the image cursor and fires click() on it.
+         The following event is triggered only when mouse is pressed.
+         */
+        window.addEventListener("mouseup", function(e) {
+          
+            // gets the object on image cursor position
+            var tmp = document.elementFromPoint(x + px, y + py); 
+            mutex = true;
+            tmp.click();
+            cursor.style.left = (px + x) + "px";
+            cursor.style.top = (py + y) + "px";
+        })
+  
+        /* The following event listener moves the image pointer 
+         with respect to the actual mouse cursor
+         The function is triggered every time mouse is moved */
+        window.addEventListener("mousemove", function(e) {
+  
+            // Gets the x,y position of the mouse cursor
+            x = e.clientX;
+            y = e.clientY;
+  
+            // sets the image cursor to new relative position
+            cursor.style.left = (px + x) + "px";
+            cursor.style.top = (py + y) + "px";
+  
+        });
+  
+        /* The following function re-calculates px,py 
+           with respect to new position
+           Clicking on b1 moves the pointer to b2
+           Clicking on b2 moves the pointer to b1 */
+  
+        b1.onclick = function() {
+            if (mutex) {
+                mutex = false;
+                px = b2.offsetLeft - x;
+                py = b2.offsetTop - y;
+            }
+        }
+  
+        b2.onclick = function() {
+            if (mutex) {
+                mutex = false;
+                px = b1.offsetLeft - x;
+                py = b1.offsetTop - y;
+            }
+        }
+        
         function startGame() {
             myGamePiece = new component(15, 720, 325);
             myGameArea.start();
@@ -57,11 +133,11 @@
                 })
                 function getCursorPosition(canvas, event) {
                     const rect = canvas.getBoundingClientRect();
-                    const x = event.clientX - rect.left;
-                    const y = event.clientY - rect.top;
+                    const anx = event.clientX - rect.left;
+                    const any = event.clientY - rect.top;
                     console.log("Mouse coords x: " + x + " y: " + y);
-                    mx = x;
-                    my = y;
+                    mx = anx;
+                    my = any;
                 }
                 const canvas = document.querySelector('canvas')
                 canvas.addEventListener('mousedown', function (e) {
@@ -84,13 +160,13 @@
             document.getElementById("HeadPhoseData").innerHTML = " HeadX: " + GazeData.HeadX + " HeadY: " + GazeData.HeadY + " HeadZ: " + GazeData.HeadZ;
             document.getElementById("HeadRotData").innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
 
-            var x = GazeData.docX;
-            var y = GazeData.docY;
+            var pax = GazeData.docX;
+            var pay = GazeData.docY;
             var gaze = document.getElementById("gaze");
-            x -= gaze.clientWidth / 2;
-            y -= gaze.clientHeight / 2;
-            gaze.style.left = x + "px";
-            gaze.style.top = y + "px";
+            pax -= gaze.clientWidth / 2;
+            pay -= gaze.clientHeight / 2;
+            gaze.style.left = pax + "px";
+            gaze.style.top = pay + "px";
 
             if (GazeData.state != 0) {
                 if (gaze.style.display == 'block')

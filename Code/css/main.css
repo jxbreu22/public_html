@@ -1,0 +1,8 @@
+body{
+    font-family: "Lucida Console", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, monospace;
+    font-size: 22;
+    background-image: url("../imgs/back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}

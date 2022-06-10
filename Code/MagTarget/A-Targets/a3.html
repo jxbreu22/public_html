@@ -1,0 +1,63 @@
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../../css/magStyle.css" />
+	<script src="../../js/mag.js"> </script>
+	<script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
+	<script src="https://api.gazerecorder.com/heatmapLive.js"></script>
+</head>
+
+<body>
+	<button type="button" class="button1" onClick="disabutton(this)">Start</button>
+	<script>
+		function disabutton(button) {
+			button.style.display = 'none';
+		}
+	</script>
+	<div class="img-magnifier-container">
+		<!-- *************************************** FILL IN IMAGE HERE ************************************ -->
+		<img id="myimage" src="../../imgs/a3.png" width="1200" height="600">
+		<!-- *********************************************************************************************** -->
+	</div>
+	<script type="text/javascript">
+
+		//////set callbacks/////////
+		window.addEventListener("load", function () {
+			//GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }
+			GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
+			GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
+			GazeCloudAPI.UseClickRecalibration = true;
+			GazeCloudAPI.OnResult = PlotGaze;
+		});
+
+		function start() {
+			GazeCloudAPI.StartEyeTracking();
+			if (false)
+				GazeCloudAPI.SetFps(15);
+		}
+		function stop() {
+			GazeCloudAPI.StopEyeTracking();
+		}
+
+		/* ************************* call magnify function *******************************/
+		var btnCoords = { x_lower : 289, y_lower : 189, x_upper : 383, y_upper : 216 };
+    magnify("myimage", 5, "a4.html", btnCoords);
+		GazeCloudAPI.RestartEyeTracking();
+		GazeCloudAPI.OnResult = function (GazeData) { GazeData.state }
+		// 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX 
+		// gaze x in document coordinates GazeData.docY 
+		// gaze y in document coordinates GazeData.time // timestamp 
+		window.addEventListener("onclick", GazeCloudAPI.StopEyeTracking());
+    /*********************************************************************************/
+	</script>
+
+	<p id="GazeData" style='display: none'> </p>
+	<p id="HeadPhoseData" style='display: none'> </p>
+	<p id="HeadRotData" style='display: none'> </p>
+
+	<div id="gaze"
+		style='position:absolute; display:none; width:100px; height:100px; border-radius:50%; border:solid 2px rgba(255,255,255,.2); box-shadow: 0 0 100px 3px rgba(125,125,125,.5); pointer-events:none; z-index:999999'>
+	</div>
+
+</body>
+
+</html>

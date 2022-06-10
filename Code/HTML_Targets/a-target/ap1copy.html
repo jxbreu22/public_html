@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="targetStyles.css" />
+    <script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
+    <script src="https://api.gazerecorder.com/heatmapLive.js"></script>
+    <script src="../../js/gazeMagStudy_2.js"> </script>
+</head>
+<script>
+    function PlotGaze(GazeData) {
+        GazeData.state // 0: valid gaze data; -1 : face tracking lost, 1 : gaze uncalibrated
+        GazeData.docX // gaze x in document coordinates
+        GazeData.docY // gaze y in document cordinates
+        GazeData.time // timestamp
+        document.getElementById("GazeData").innerHTML = GazeData.docX + " " + GazeData.docY;
+        document.getElementById("HeadPhoseData").innerHTML = " HeadX: " + GazeData.HeadX + " HeadY: " + GazeData.HeadY + " HeadZ: " + GazeData.HeadZ;
+        document.getElementById("HeadRotData").innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
+
+        var x = GazeData.docX;
+        var y = GazeData.docY;
+        var gaze = document.getElementById("gaze");
+        x -= gaze.clientWidth / 2;
+        y -= gaze.clientHeight / 2;
+        gaze.style.left = x + "px";
+        gaze.style.top = y + "px";
+
+        if (GazeData.state != 0) {
+            if (gaze.style.display == 'block')
+                gaze.style.display = 'none';
+        }
+        else {
+            if (gaze.style.display == 'none')
+                gaze.style.display = 'block';
+        }
+        ShowHeatMap();
+    }
+
+    //////set callbacks/////////
+    window.addEventListener("load", function () {
+        GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }
+        GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
+        GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
+        GazeCloudAPI.UseClickRecalibration = true;
+        GazeCloudAPI.OnResult = PlotGaze;
+    });
+
+    function start() {
+        GazeCloudAPI.StartEyeTracking();
+
+        if (false)
+            GazeCloudAPI.SetFps(15);
+
+    }
+
+    function stop() {
+
+        GazeCloudAPI.StopEyeTracking();
+    }
+
+    /* ************************* call magnify function *******************************/
+    magnify("myimage", document, start, stop);
+    GazeCloudAPI.StartEyeTracking();
+    GazeCloudAPI.OnResult = function (GazeData) { GazeData.state } // 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX // gaze x in document coordinates GazeData.docY // gaze y in document coordinates GazeData.time // timestamp 
+    var btnCoords = { x_lower: 664, y_lower: 347, x_upper: 758, y_upper: 372 };
+    GazeCloudAPI.StopEyeTracking();
+    /*********************************************************************************/
+
+</script>
+
+<p id="GazeData" style='display: none'> </p>
+<p id="HeadPhoseData" style='display: none'> </p>
+<p id="HeadRotData" style='display: none'> </p>
+
+<div id="gaze"
+    style='position:absolute; display:none; width:100px; height:100px; border-radius:50%; border:solid 2px rgba(255,255,255,.2); box-shadow: 0 0 100px 3px rgba(125,125,125,.5); pointer-events:none; z-index:999999'>
+</div>
+
+<body>
+    <div class="practice">Practice 1</div>
+    <div class="grid-container">
+        <input type="button" class="grid-item" value="rtvc">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="text">
+        <input type="button" class="grid-item" value="awdw">
+        <input type="button" class="grid-item" value="qrty">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="exnt">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nity">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="ydki">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="xert">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="ntex">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="dwnp">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="dwgy">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="entr">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="ipol">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="qgdr">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="yuip">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nitx">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="xetn">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nixt">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nexx">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="rofl">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="wdhb">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="ntex">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="sent">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item-correct" onclick="window.location.href='A-practice2.html'" value="next">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="bext">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nert">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="bixt">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <input type="button" class="grid-item" value="nips">
+        <input type="button" class="grid-item" value="nrtx">
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+        <div class="invisible-grid-item"></div>
+
+    </div>
+</body>
+
+</html>

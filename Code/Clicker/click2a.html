@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../js/mag.js"></script>
+    <!--<script src="../js/gazeAPI.js"></script>-->
+    <script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
+    <script src="https://api.gazerecorder.com/heatmapLive.js"></script>
+    <!-- Click game (v2.0) created to test the eye tracker accuracy -->
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #0d0d0c;
+        }
+    </style>
+</head>
+
+<body onload="startGame()">
+    <script>
+        var myGamePiece;
+        var counter = 0;
+        var mx, my;
+
+        function startGame() {
+            myGamePiece = new component(15, 720, 325);
+            myGameArea.start();
+        }
+
+        var myGameArea = {
+            canvas: document.createElement("canvas"),
+            start: function () {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                this.interval = setInterval(updateGameArea, 20);
+                window.addEventListener('mousedown', function (e) {
+                    myGameArea.x = e.pageX;
+                    myGameArea.y = e.pageY;
+                })
+                window.addEventListener('mouseup', function (e) {
+                    myGameArea.x = false;
+                    myGameArea.y = false;
+                })
+                window.addEventListener('touchstart', function (e) {
+                    myGameArea.x = e.pageX;
+                    myGameArea.y = e.pageY;
+                })
+                window.addEventListener('touchend', function (e) {
+                    myGameArea.x = false;
+                    myGameArea.y = false;
+                })
+                function getCursorPosition(canvas, event) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+                    console.log("Mouse coords x: " + x + " y: " + y);
+                    mx = x;
+                    my = y;
+                }
+                const canvas = document.querySelector('canvas')
+                canvas.addEventListener('mousedown', function (e) {
+                    getCursorPosition(canvas, e);
+                })
+            },
+            clear: function () {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            },
+            stop: function () {
+                clearInterval(this.interval);
+            }
+        }
+        function PlotGaze(GazeData) {
+            GazeData.state // 0: valid gaze data; -1 : face tracking lost, 1 : gaze uncalibrated
+            GazeData.docX // gaze x in document coordinates
+            GazeData.docY // gaze y in document cordinates
+            GazeData.time // timestamp
+            document.getElementById("GazeData").innerHTML = GazeData.docX + " " + GazeData.docY;
+            document.getElementById("HeadPhoseData").innerHTML = " HeadX: " + GazeData.HeadX + " HeadY: " + GazeData.HeadY + " HeadZ: " + GazeData.HeadZ;
+            document.getElementById("HeadRotData").innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
+
+            var x = GazeData.docX;
+            var y = GazeData.docY;
+            var gaze = document.getElementById("gaze");
+            x -= gaze.clientWidth / 2;
+            y -= gaze.clientHeight / 2;
+            gaze.style.left = x + "px";
+            gaze.style.top = y + "px";
+
+            if (GazeData.state != 0) {
+                if (gaze.style.display == 'block')
+                    gaze.style.display = 'none';
+            }
+            //else {
+                //if (gaze.style.display == 'none')
+                    //gaze.style.display = 'block';
+            //}
+            //ShowHeatMap();
+        }
+        function component(radius, x, y) {
+            this.radius = radius;
+            this.speedX = 0;
+            this.speedY = 0;
+            this.x = x;
+            this.y = y;
+            this.update = function () {
+                ctx = myGameArea.context;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'yellow';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#FFFD33';
+                ctx.stroke();
+            }
+            var base = Date.now();
+            var cur;
+            this.clicked = function () {
+                var clicked = false;
+                cur = Date.now();
+                dif = cur-base;
+                if (dif > 100) {
+                    console.log("Time: " + dif);
+                    //console.log (mx + " " + my + " " + this.x + " " + this.y);
+                    var xd = (mx - this.x);
+                    var xy = (my - this.y);
+                    //console.log("XD " + xd + " XY " + xy);
+                    var xDist = Math.sqrt((xd * xd) + (xy * xy));
+                    //console.log("DISTANCE " + xDist);
+                    var clicked = false;
+                    if (xDist < this.radius) clicked = true;
+                }
+                base = Date.now();
+                cur = base;
+                return clicked;
+            }
+        }
+        function updateGameArea() {
+            myGameArea.clear();
+            if (myGameArea.x && myGameArea.y && counter < 21) {
+                if (myGamePiece.clicked() == true) {
+                    counter++;
+                    //console.log(counter);
+                    newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
+                    newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
+                    while (Math.abs(myGamePiece.x - newX) < (window.innerHeight * 0.2)) {
+                        newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
+                    }
+                    while (Math.abs(myGamePiece.y - newY) < (window.innerWidth * 0.2)) {
+                        newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
+                    }
+                    console.log("X distance between coords: " + Math.abs(myGamePiece.x-newX));
+                    console.log("Y distance between coords: " + Math.abs(myGamePiece.y-newY));
+                    myGamePiece.x = newX;
+                    myGamePiece.y = newY;
+                    console.log("Circle coords x: " + myGamePiece.x + " y: " + myGamePiece.y);
+                }
+            }
+            myGamePiece.update();
+            if (counter >= 21) {
+                myGameArea.clear();
+                myGameArea.stop();
+                stop();
+            }
+        }
+        window.addEventListener("load", function () {
+            //GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }
+			GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
+			GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
+			GazeCloudAPI.UseClickRecalibration = true;
+			GazeCloudAPI.OnResult = PlotGaze;
+        });
+
+        function start() {
+            GazeCloudAPI.StartEyeTracking();
+            if (false)
+                GazeCloudAPI.SetFps(15);
+        }
+        function stop() {
+            GazeCloudAPI.StopEyeTracking();
+        }
+        start();
+        GazeCloudAPI.OnResult = function (GazeData) { GazeData.state } 
+    </script>
+    <form action="../../index.html">
+        <input type="submit" value="Index">
+    </form>
+    <p id="GazeData" style='display: none'> </p>
+    <p id="HeadPhoseData" style='display: none'> </p>
+    <p id="HeadRotData" style='display: none'> </p>
+
+    <div id="gaze"
+        style='position:absolute; display:none; width:100px; height:100px; border-radius:50%; border:solid 2px rgba(255,255,255,.2); box-shadow: 0 0 100px 3px rgba(125,125,125,.5); pointer-events:none; z-index:999999'>
+    </div>
+</body>
+
+</html>

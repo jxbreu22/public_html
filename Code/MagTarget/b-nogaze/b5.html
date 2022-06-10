@@ -15,7 +15,7 @@
 	</script>
 	<div class="img-magnifier-container">
 		<!-- *************************************** FILL IN IMAGE HERE ************************************ -->
-		<img id="myimage" src="../../imgs/b5.png" width="1200" height="600">
+		<img id="myimage" src="../../imgs/b2.png" width="1200" height="600">
 		<!-- *********************************************************************************************** -->
 	</div>
 	<script type="text/javascript">
@@ -39,8 +39,8 @@
 		}
 
 		/* ************************* call magnify function *******************************/
-		var btnCoords = { x_lower : 384, y_lower : 114, x_upper : 476, y_upper : 139 };
-    magnify("myimage", 5, "b3.html", btnCoords);
+		var btnCoords = { x_lower : 571, y_lower : 165, x_upper : 665, y_upper : 191 };
+    magnify("myimage", 5, "b6.html", btnCoords);
 		GazeCloudAPI.RestartEyeTracking();
 		GazeCloudAPI.OnResult = function (GazeData) { GazeData.state }
 		// 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX 

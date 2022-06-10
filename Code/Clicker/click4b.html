@@ -27,14 +27,14 @@
         *{cursor: none;}
     </style>
 </head>
-
 <body onload="startGame()">
+    <img id="cursor" src="https://media.geeksforgeeks.org/wp-content/uploads/20200319212118/cursor2.png" 
+         width="15" height="20" />
     <script>
+        magnify("cursor");
         var myGamePiece;
         var counter = 0;
         var mx, my;
-        <img id="cursor" src="https://media.geeksforgeeks.org/wp-content/uploads/20200319212118/cursor2.png" 
-         width="15" height="20" />
         
         var x, y;
         var px, py;
@@ -80,27 +80,6 @@
             cursor.style.top = (py + y) + "px";
   
         });
-  
-        /* The following function re-calculates px,py 
-           with respect to new position
-           Clicking on b1 moves the pointer to b2
-           Clicking on b2 moves the pointer to b1 */
-  
-        b1.onclick = function() {
-            if (mutex) {
-                mutex = false;
-                px = b2.offsetLeft - x;
-                py = b2.offsetTop - y;
-            }
-        }
-  
-        b2.onclick = function() {
-            if (mutex) {
-                mutex = false;
-                px = b1.offsetLeft - x;
-                py = b1.offsetTop - y;
-            }
-        }
         
         function startGame() {
             myGamePiece = new component(15, 720, 325);

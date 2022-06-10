@@ -1,6 +1,6 @@
 const tasks = ["instr_calib", "pr1b", "pr2b", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10",
 	"instr", "bp1", "bq1", "bp2", "bq2"];
-var mouseControl = true;
+var mouseControl = false;
 var hLock = false;
 var hLockCount = 0;
 var nextTaskIndex = 0;
@@ -113,7 +113,8 @@ function PlotGaze(GazeData) {
 	//console.log("GAZE: " + GazeData.docX + " " + GazeData.docY);
 }
 
-function magnify(imgID, doc, nextPage, btnCoords) {
+function magnify(imgID) {
+    window.setInterval(moveToGazeCoords, 200);
 	/* *************************** CHANGE DEFAULT ZOOM LEVEL HERE *********************************/
 	//var zoom;// = 4;
 	/* **********************************************************************************************/
@@ -122,9 +123,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	/*create magnifier glass:*/
 	glass = document.createElement("DIV");
 	glass.setAttribute("class", "img-magnifier-glass");
-	if(zoom===undefined) zoom = 4;
-	if(glassHeight===undefined) glassHeight = 300;
-	if(glassWidth===undefined) glassWidth = 600;
+	if(zoom===undefined) zoom = 1;
+	if(glassHeight===undefined) glassHeight = 100;
+	if(glassWidth===undefined) glassWidth = 100;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -192,7 +193,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		return { x: x, y: y };
 	}
 
-	/* Move the magnifying glass based on the coordinates in GazeData 
+	//Move the magnifying glass based on the coordinates in GazeData 
 	function moveToGazeCoords() {
 		var x, y, left_old, left_new, top_old, top_new, incr;
 		incr = 7;
@@ -205,12 +206,12 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		x = parseFloat(gazeData[0]);
 		y = parseFloat(gazeData[1]);
 		//console.log("GazeX: " + x + ", GazeY: " + y);
-		/*prevent the magnifier glass from being positioned outside the image:
+		//prevent the magnifier glass from being positioned outside the image:
 		if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
 		if (x < w / zoom) { x = w / zoom; }
 		if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
 		if (y < h / zoom) { y = h / zoom; }
-		/*move the glass towards the gaze coordinates
+		//move the glass towards the gaze coordinates
 		left_old = parseInt(glass.style.left.slice(0, -2));
 		left_new = left_old;
 		top_old = parseInt(glass.style.top.slice(0, -2));
@@ -242,9 +243,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//glass.style.left = (x - w) + "px";
 		//glass.style.top = (y - h) + "px";
 
-		/*display what the magnifier glass "sees":
+		//display what the magnifier glass "sees":
 		glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
-	}*/
+	}
 }
 function startTimer() {
 	if (!running) {

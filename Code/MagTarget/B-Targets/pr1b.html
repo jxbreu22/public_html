@@ -25,11 +25,11 @@
 
 		//////set callbacks/////////
 		window.addEventListener("load", function () {
-			GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }
+			//GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }
 			GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
 			GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
 			GazeCloudAPI.UseClickRecalibration = true;
-			GazeCloudAPI.OnResult = PlotGaze;
+			//GazeCloudAPI.OnResult = PlotGaze;
 			Clearheatmap();
 		});
 

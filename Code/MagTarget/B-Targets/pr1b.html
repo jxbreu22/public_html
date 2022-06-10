@@ -2,21 +2,26 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../../css/magStyle.css" />
-  <script src="../../js/gazeMag.js"> </script>
-  <script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
-<script src="https://api.gazerecorder.com/heatmapLive.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../../css/magStyle.css" />
+	<script src="../../js/gazeMag.js"> </script>
+	<script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
+	<script src="https://api.gazerecorder.com/heatmapLive.js"></script>
 </head>
 
 <body>
-
-  <div class="img-magnifier-container">
-  <!-- *************************************** FILL IN IMAGE HERE ************************************ -->
-    <img id="myimage" src="../../imgs/pr1b.png" width="1200" height="600">
-  <!-- *********************************************************************************************** -->
-  </div>
-  <script type="text/javascript">
+	<button type="button" class="button1" onClick="disabutton(this)">Start</button>
+	<script>
+		function disabutton(button) {
+			button.style.display = 'none';
+		}
+	</script>
+	<div class="img-magnifier-container">
+		<!-- *************************************** FILL IN IMAGE HERE ************************************ -->
+		<img id="myimage" src="../../imgs/pr1b.png" width="1200" height="600">
+		<!-- *********************************************************************************************** -->
+	</div>
+	<script type="text/javascript">
 
 		//////set callbacks/////////
 		window.addEventListener("load", function () {
@@ -38,13 +43,13 @@
 		}
 
 		/* ************************* call magnify function *******************************/
-		var btnCoords = { x_lower : 851, y_lower : 247, x_upper : 945, y_upper : 272 };
+		var btnCoords = { x_lower: 851, y_lower: 247, x_upper: 945, y_upper: 272 };
 		magnify("myimage", 5, "pr2b.html", btnCoords);
 		GazeCloudAPI.StartEyeTracking();
-		GazeCloudAPI.OnResult = function (GazeData) { GazeData.state } 
-    // 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX 
-    // gaze x in document coordinates GazeData.docY 
-    // gaze y in document coordinates GazeData.time // timestamp 
+		GazeCloudAPI.OnResult = function (GazeData) { GazeData.state }
+		// 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX 
+		// gaze x in document coordinates GazeData.docY 
+		// gaze y in document coordinates GazeData.time // timestamp 
 		GazeCloudAPI.StopEyeTracking();
     /*********************************************************************************/
 

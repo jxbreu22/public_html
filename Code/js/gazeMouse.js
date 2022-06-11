@@ -18,18 +18,22 @@ var main = [];
 var clicked = false;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
+var base = new Date().getTime();
 //setInterval(getCursorPos, 200);
-function collectData(){
-  time = new Date().getTime();
-  var row = [clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY];
-  console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
-  //+ " mouseX: " + mouseX + " mouseY: " + mouseY);
-  clicked = false;
-  main+=row;
+function collectData() {
+	time = new Date().getTime();
+	if (base-time>500){
+		var row = [clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY];
+		console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+		//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
+		clicked = false;
+		main += row;
+	}
+	base = new Date().getTime();
 }
 function recordCoords() {
 	var x, y;
-	try{
+	try {
 		gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 		x = parseFloat(gazeData[0]).toFixed(2);
 		y = parseFloat(gazeData[1]).toFixed(2);
@@ -38,7 +42,7 @@ function recordCoords() {
 		gazeY = y;
 		//console.log("Gaze: " + coordsString);
 	}
-	catch (TypeError){
+	catch (TypeError) {
 		//.log(TypeError);
 		return;
 	}
@@ -51,11 +55,11 @@ function writeToText(rows) {
 		s.write(x + ", ");
 	}
 	s.write("/n");
-    //s.Close();
+	//s.Close();
 }*/
-function sendPHP(){
+function sendPHP() {
 	var data = new FormData();
-	for (x in main){
+	for (x in main) {
 		data.append(main[i]);
 	}
 	var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
@@ -66,15 +70,15 @@ window.addEventListener("beforeunload", function (e) {
 	sendPHP();
 });
 
-function logClick(){
+function logClick() {
 	clicked = true;
 	collectData();
 }
 //Export as CSV
-function exportCSV(){
+function exportCSV() {
 	var main = exportMain();
 	let csvContent = "data:text/csv;charset=utf-8,";
-	main.forEach(function(rowArray) {
+	main.forEach(function (rowArray) {
 		let row = rowArray.join(",");
 		csvContent += row + "\r\n";
 	});
@@ -114,7 +118,7 @@ function PlotGaze(GazeData) {
 }
 
 function magnify(imgID) {
-    window.setInterval(moveToGazeCoords, 200);
+	window.setInterval(moveToGazeCoords, 200);
 	/* *************************** CHANGE DEFAULT ZOOM LEVEL HERE *********************************/
 	//var zoom;// = 4;
 	/* **********************************************************************************************/
@@ -123,9 +127,9 @@ function magnify(imgID) {
 	/*create magnifier glass:*/
 	glass = document.createElement("DIV");
 	glass.setAttribute("class", "img-magnifier-glass");
-	if(zoom===undefined) zoom = 1;
-	if(glassHeight===undefined) glassHeight = 100;
-	if(glassWidth===undefined) glassWidth = 100;
+	if (zoom === undefined) zoom = 1;
+	if (glassHeight === undefined) glassHeight = 0;
+	if (glassWidth === undefined) glassWidth = 0;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -136,16 +140,16 @@ function magnify(imgID) {
 	glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 	bw = 3;
 	w = glass.offsetWidth / 2;
-	h = glass.offsetHeight /2;
+	h = glass.offsetHeight / 2;
 	/* Move the mag to mouse (when mouseControl is true):*/
-	glass.addEventListener("mousemove", moveToMouse);
-	img.addEventListener("mousemove", moveToMouse);
+	//glass.addEventListener("mousemove", moveToMouse);
+	//img.addEventListener("mousemove", moveToMouse);
 	/* handle keypresses */
-	document.addEventListener("keydown", keyControl);
-	document.addEventListener("keyup", checkShiftUp);
+	//document.addEventListener("keydown", keyControl);
+	//document.addEventListener("keyup", checkShiftUp);
 	// check click for button
 	glass.addEventListener("click", checkClick, false);
-  	img.addEventListener("click", checkClick, false);
+	img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	//setInterval(moveToGazeCoords, 30);
 
@@ -157,13 +161,13 @@ function magnify(imgID) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
-		  window.location.href = nextPage;
+			window.location.href = nextPage;
 		}
 	}
 
 	function recordCoords() {
 		var x, y;
-		try{
+		try {
 			gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 			x = parseFloat(gazeData[0]).toFixed(2);
 			y = parseFloat(gazeData[1]).toFixed(2);
@@ -172,7 +176,7 @@ function magnify(imgID) {
 			gazeY = y;
 			//console.log("Gaze: " + coordsString);
 		}
-		catch (TypeError){
+		catch (TypeError) {
 			//.log(TypeError);
 			return;
 		}
@@ -192,60 +196,122 @@ function magnify(imgID) {
 		mouseY = y;
 		return { x: x, y: y };
 	}
-
+	var x, y;
+	var px, py;
+	px = py = 0;
+	// Image of cursor
+	var cursor = document.getElementById("cursor");
 	//Move the magnifying glass based on the coordinates in GazeData 
 	function moveToGazeCoords() {
-		var x, y, left_old, left_new, top_old, top_new, incr;
+		//var x, y, left_old, left_new, top_old, top_new, incr;
 		incr = 7;
-		try{
+		try {
 			gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 		}
-		catch (TypeError){
+		catch (TypeError) {
+			console.log(TypeError)
 			return;
 		}
 		x = parseFloat(gazeData[0]);
 		y = parseFloat(gazeData[1]);
-		//console.log("GazeX: " + x + ", GazeY: " + y);
-		//prevent the magnifier glass from being positioned outside the image:
-		if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
-		if (x < w / zoom) { x = w / zoom; }
-		if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
-		if (y < h / zoom) { y = h / zoom; }
-		//move the glass towards the gaze coordinates
-		left_old = parseInt(glass.style.left.slice(0, -2));
-		left_new = left_old;
-		top_old = parseInt(glass.style.top.slice(0, -2));
-		top_new = top_old;
-		//console.log(`Gaze Y: ${y}, top of mag: ${top_old}`);
-
-		if (x < (left_old + 0.5 * w)) { // move the glass left
-			left_new -= incr;
-			glass.style.left = (left_new) + "px";
-		}
-		else if (x > (left_old + 1.5 * w)) { // move the glass right
-			left_new += incr;
-			glass.style.left = (left_new) + "px";
-		}
-
-		if ((!hLock) && (y < (top_old + 0.5 * h))) { // move the glass up
-			top_new -= incr;
-			glass.style.top = (top_new) + "px";
-		}
-		else if ((!hLock) && (y > (top_old + 1.5 * h))) { // move the glass down
-			top_new += incr;
-			glass.style.top = (top_new) + "px";
-		}
-
-		x = left_new + w;
-		y = top_new + h;
-
-		/*old code to directly set the position of the magnifier glass:*/
-		//glass.style.left = (x - w) + "px";
-		//glass.style.top = (y - h) + "px";
-
-		//display what the magnifier glass "sees":
-		glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
 	}
+
+	/* mutex is used to avoid multiple click event from
+	   firing at the same time due to different position
+	   of image cursor and actual cursor 
+	   Using mutex avoid any conflicts if original cursor and
+	   image cursor are both on a clickable element
+	   This makes sure only 1 click event is triggered at a time*/
+
+	var mutex = false;
+
+	/*
+	 The following event is selecting the element
+	 on the image cursor and fires click() on it.
+	 The following event is triggered only when mouse is pressed.
+	 */
+	window.addEventListener("keydown", keyControl);
+	function keyControl(e){
+		try{
+			switch (e.code) {
+				case("KeyB"):
+		// gets the object on image cursor position
+					var tmp = document.elementFromPoint(x + px, y + py);
+					mutex = true;
+					tmp.click();
+					cursor.style.left = (px + x) + "px";
+					cursor.style.top = (py + y) + "px";
+			}
+		}
+		catch(TypeError){
+			return;
+		}
+	}
+
+	/* The following event listener moves the image pointer 
+	 with respect to the actual mouse cursor
+	 The function is triggered every time mouse is moved */
+	window.addEventListener("mousemove", function (e) {
+
+		// Gets the x,y position of the mouse cursor
+		x = e.clientX;
+		y = e.clientY;
+
+		// sets the image cursor to new relative position
+		cursor.style.left = (px + x) + "px";
+		cursor.style.top = (py + y) + "px";
+
+	});
+	setInterval(gmUpdate, 5);
+	function gmUpdate(){
+		x = gazeX;
+		y = gazeY;
+		cursor.style.left = (px + x) + "px";
+		cursor.style.top = (py + y) + "px";
+	}
+	/*
+	//console.log("GazeX: " + x + ", GazeY: " + y);
+	//prevent the magnifier glass from being positioned outside the image:
+	if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
+	if (x < w / zoom) { x = w / zoom; }
+	if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
+	if (y < h / zoom) { y = h / zoom; }
+	//move the glass towards the gaze coordinates
+	left_old = parseInt(glass.style.left.slice(0, -2));
+	left_new = left_old;
+	top_old = parseInt(glass.style.top.slice(0, -2));
+	top_new = top_old;
+	//console.log(`Gaze Y: ${y}, top of mag: ${top_old}`);
+
+	if (x < (left_old + 0.5 * w)) { // move the glass left
+		left_new -= incr;
+		glass.style.left = (left_new) + "px";
+	}
+	else if (x > (left_old + 1.5 * w)) { // move the glass right
+		left_new += incr;
+		glass.style.left = (left_new) + "px";
+	}
+
+	if ((!hLock) && (y < (top_old + 0.5 * h))) { // move the glass up
+		top_new -= incr;
+		glass.style.top = (top_new) + "px";
+	}
+	else if ((!hLock) && (y > (top_old + 1.5 * h))) { // move the glass down
+		top_new += incr;
+		glass.style.top = (top_new) + "px";
+	}
+
+	x = left_new + w;
+	y = top_new + h;
+
+	old code to directly set the position of the magnifier glass:
+	//glass.style.left = (x - w) + "px";
+	//glass.style.top = (y - h) + "px";
+
+	//display what the magnifier glass "sees":
+	glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+
+}*/
 }
 function startTimer() {
 	if (!running) {

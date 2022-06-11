@@ -3,7 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../js/mag.js"></script>
+    <script src="../js/gazeMouse.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/magStyle.css" />
     <!--<script src="../js/gazeAPI.js"></script>-->
     <script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
     <script src="https://api.gazerecorder.com/heatmapLive.js"></script>
@@ -35,51 +36,7 @@
         var myGamePiece;
         var counter = 0;
         var mx, my;
-        
-        var x, y;
-        var px, py;
-        px = py = 0;
-        // Image of cursor
-        var cursor = document.getElementById("cursor"); 
-  
-        /* mutex is used to avoid multiple click event from
-           firing at the same time due to different position
-           of image cursor and actual cursor 
-           Using mutex avoid any conflicts if original cursor and
-           image cursor are both on a clickable element
-           This makes sure only 1 click event is triggered at a time*/
-             
-        var mutex = false;
-  
-        /*
-         The following event is selecting the element
-         on the image cursor and fires click() on it.
-         The following event is triggered only when mouse is pressed.
-         */
-        window.addEventListener("mouseup", function(e) {
-          
-            // gets the object on image cursor position
-            var tmp = document.elementFromPoint(x + px, y + py); 
-            mutex = true;
-            tmp.click();
-            cursor.style.left = (px + x) + "px";
-            cursor.style.top = (py + y) + "px";
-        })
-  
-        /* The following event listener moves the image pointer 
-         with respect to the actual mouse cursor
-         The function is triggered every time mouse is moved */
-        window.addEventListener("mousemove", function(e) {
-  
-            // Gets the x,y position of the mouse cursor
-            x = e.clientX;
-            y = e.clientY;
-  
-            // sets the image cursor to new relative position
-            cursor.style.left = (px + x) + "px";
-            cursor.style.top = (py + y) + "px";
-  
-        });
+    
         
         function startGame() {
             myGamePiece = new component(15, 720, 325);
@@ -110,17 +67,17 @@
                     myGameArea.x = false;
                     myGameArea.y = false;
                 })
-                function getCursorPosition(canvas, event) {
+                /*function getCursorPosition(canvas, event) {
                     const rect = canvas.getBoundingClientRect();
                     const anx = event.clientX - rect.left;
                     const any = event.clientY - rect.top;
-                    console.log("Mouse coords x: " + x + " y: " + y);
+                    console.log("Mouse coords x: " +anx + " y: " + any);
                     mx = anx;
                     my = any;
-                }
+                }*/
                 const canvas = document.querySelector('canvas')
                 canvas.addEventListener('mousedown', function (e) {
-                    getCursorPosition(canvas, e);
+                    //getCursorPosition(canvas, e);
                 })
             },
             clear: function () {
@@ -128,6 +85,15 @@
             },
             stop: function () {
                 clearInterval(this.interval);
+            }
+        }
+        document.addEventListener("keydown", keyControl);
+        function keyControl(e){
+            switch (e.code) {
+                case "KeyB":
+                    mx = cursor.style.left;
+                    my = cursor.style.top;
+                    console.log(mx + " " + my);
             }
         }
         function PlotGaze(GazeData) {
@@ -153,7 +119,7 @@
             }
             //else {
                 //if (gaze.style.display == 'none')
-                    //gaze.style.display = 'block';
+            gaze.style.display = 'block';
             //}
             //ShowHeatMap();
         }
@@ -182,9 +148,9 @@
                 if (dif > 100) {
                     console.log("Time: " + dif);
                     //console.log (mx + " " + my + " " + this.x + " " + this.y);
-                    var xd = (mx - this.x);
-                    var xy = (my - this.y);
-                    //console.log("XD " + xd + " XY " + xy);
+                    var xd = Math.abs(mx - this.x);
+                    var xy = Math.abs(my - this.y);
+                    console.log("XD " + xd + " XY " + xy);
                     var xDist = Math.sqrt((xd * xd) + (xy * xy));
                     //console.log("DISTANCE " + xDist);
                     var clicked = false;
@@ -197,7 +163,7 @@
         }
         function updateGameArea() {
             myGameArea.clear();
-            if (myGameArea.x && myGameArea.y && counter < 21) {
+            if ( counter < 21) { //myGameArea.x && myGameArea.y &&
                 if (myGamePiece.clicked() == true) {
                     counter++;
                     //console.log(counter);

@@ -107,9 +107,13 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	/*create magnifier glass:*/
 	glass = document.createElement("DIV");
 	glass.setAttribute("class", "img-magnifier-glass");
-	if(zoom===undefined) zoom = 4;
-	if(glassHeight===undefined) glassHeight = 300;
-	if(glassWidth===undefined) glassWidth = 600;
+	let zoom = localStorage.getItem("zoom");
+	let glassHeight = localStorage.getItem("height");
+	let glassWidth = localStorage.getItem("width");
+	console.log(zoom + " " + glassHeight + " " + glassWidth);
+	if(zoom===undefined || zoom===null) zoom = 4;
+	if(glassHeight === undefined || glassHeight === null) glassHeight = 300;
+	if(glassWidth === undefined || glassWidth === null) glassWidth = 600;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -234,6 +238,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 					console.log("Zoom in");
 					zoom += 1;
 				}
+				if (zoom < 1 || zoom > 40){
+					zoom = 4;
+				}
+				localStorage.setItem("zoom", zoom);
 				glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 				break;
 			case 'KeyW':
@@ -260,29 +268,37 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 				glass.style.left = left + "px";
 				wasdCount++;
 				break;
+			case 'KeyC':
+				//clear local storage
+				localStorage.clear();
+				break;
 			case 'ArrowUp':
 				// shrink glass vertically
 				glassHeight = parseInt(glass.style.height.slice(0, -2));
 				glassHeight -= 10;
 				glass.style.height = glassHeight + "px";
+				localStorage.setItem("height", glassHeight);
 				break;
 			case 'ArrowDown':
 				// expand glass vertically
 				glassHeight = parseInt(glass.style.height.slice(0, -2));
 				glassHeight += 10;
 				glass.style.height = glassHeight + "px";
+				localStorage.setItem("height", glassHeight);
 				break;
 			case 'ArrowRight':
 				// expand glass horizontally
 				glassWidth = parseInt(glass.style.width.slice(0, -2));
 				glassWidth += 10;
 				glass.style.width = glassWidth + "px";
+				localStorage.setItem("width", glassWidth);
 				break;
 			case 'ArrowLeft':
 				// shrink glass horizontally
 				glassWidth = parseInt(glass.style.width.slice(0, -2));
 				glassWidth -= 10;
 				glass.style.width = glassWidth + "px";
+				localStorage.setItem("width", glassWidth);
 				break;
 			case 'Enter':
 				if (e.ctrlKey) {

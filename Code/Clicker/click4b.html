@@ -17,6 +17,8 @@
         canvas {
             border: 1px solid #d3d3d3;
             background-color: #0d0d0c;
+            /* makes the cursor invisible */
+            cursor: none;
         }
         img {
             pointer-events: none;
@@ -24,8 +26,6 @@
                do not acquires the image cursor object */
             position: absolute;
         }
-        /* makes the cursor invisible */
-        *{cursor: none;}
     </style>
 </head>
 <body onload="startGame()">
@@ -39,8 +39,9 @@
     
         
         function startGame() {
-            myGamePiece = new component(15, 720, 325);
+            myGamePiece = new component(25, 720, 325);
             myGameArea.start();
+            setInterval(myGamePiece.update(), 20); //myGamePiece.update();
         }
 
         var myGameArea = {
@@ -50,23 +51,22 @@
                 this.canvas.height = window.innerHeight;
                 this.context = this.canvas.getContext("2d");
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                this.interval = setInterval(updateGameArea, 20);
-                window.addEventListener('mousedown', function (e) {
-                    myGameArea.x = e.pageX;
-                    myGameArea.y = e.pageY;
-                })
-                window.addEventListener('mouseup', function (e) {
-                    myGameArea.x = false;
-                    myGameArea.y = false;
-                })
-                window.addEventListener('touchstart', function (e) {
-                    myGameArea.x = e.pageX;
-                    myGameArea.y = e.pageY;
-                })
-                window.addEventListener('touchend', function (e) {
-                    myGameArea.x = false;
-                    myGameArea.y = false;
-                })
+                //window.addEventListener('mousedown', function (e) {
+                    //myGameArea.x = e.pageX;
+                    //myGameArea.y = e.pageY;
+                //})
+                //window.addEventListener('mouseup', function (e) {
+                    //myGameArea.x = false;
+                    //myGameArea.y = false;
+                //})
+                //window.addEventListener('touchstart', function (e) {
+                   // myGameArea.x = e.pageX;
+                    //myGameArea.y = e.pageY;
+                //})
+               // window.addEventListener('touchend', function (e) {
+                    //myGameArea.x = false;
+                  //  myGameArea.y = false;
+                //s})
                 /*function getCursorPosition(canvas, event) {
                     const rect = canvas.getBoundingClientRect();
                     const anx = event.clientX - rect.left;
@@ -76,9 +76,9 @@
                     my = any;
                 }*/
                 const canvas = document.querySelector('canvas')
-                canvas.addEventListener('mousedown', function (e) {
+                //canvas.addEventListener('mousedown', function (e) {
                     //getCursorPosition(canvas, e);
-                })
+                //})
             },
             clear: function () {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -88,12 +88,34 @@
             }
         }
         document.addEventListener("keydown", keyControl);
+        //var clicked = false;
+        var base = Date.now();
         function keyControl(e){
             switch (e.code) {
                 case "KeyB":
-                    mx = cursor.style.left;
-                    my = cursor.style.top;
+                    //clicked = false;
+                    mx = parseFloat(cursor.style.left);
+                    my = parseFloat(cursor.style.top);
                     console.log(mx + " " + my);
+                    var cur;
+                    cur = Date.now();
+                    dif = cur-base;
+                    if (dif > 100) {
+                        console.log("Time: " + dif);
+                        console.log (mx + " " + my + " " + myGamePiece.x + " " + myGamePiece.y);
+                        var xd = Math.abs(mx - myGamePiece.x);
+                        var xy = Math.abs(my - myGamePiece.y);
+                        console.log("XD " + xd + " XY " + xy);
+                        var xDist = Math.sqrt((xd * xd) + (xy * xy));
+                        console.log("DISTANCE " + xDist);
+                        if (!(isNaN(xDist)) && xDist < 25.0){
+                            //clicked = true;
+                            console.log("updating game area");
+                            updateGameArea();
+                        }
+                    }
+                    base = Date.now();     
+                    //return clicked;
             }
         }
         function PlotGaze(GazeData) {
@@ -139,55 +161,39 @@
                 ctx.strokeStyle = '#FFFD33';
                 ctx.stroke();
             }
-            var base = Date.now();
-            var cur;
-            this.clicked = function () {
-                var clicked = false;
-                cur = Date.now();
-                dif = cur-base;
-                if (dif > 100) {
-                    console.log("Time: " + dif);
-                    //console.log (mx + " " + my + " " + this.x + " " + this.y);
-                    var xd = Math.abs(mx - this.x);
-                    var xy = Math.abs(my - this.y);
-                    console.log("XD " + xd + " XY " + xy);
-                    var xDist = Math.sqrt((xd * xd) + (xy * xy));
-                    //console.log("DISTANCE " + xDist);
-                    var clicked = false;
-                    if (xDist < this.radius) clicked = true;
-                }
-                base = Date.now();
-                cur = base;
-                return clicked;
-            }
         }
         function updateGameArea() {
             myGameArea.clear();
             if ( counter < 21) { //myGameArea.x && myGameArea.y &&
-                if (myGamePiece.clicked() == true) {
+                //console.log(clicked);
+                //if (clicked) {
                     counter++;
                     //console.log(counter);
-                    newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
-                    newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
-                    while (Math.abs(myGamePiece.x - newX) < (window.innerHeight * 0.2)) {
-                        newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
+                    rad = myGamePiece.radius * 2;
+                    rad2 = myGamePiece.radius * 4;
+                    //console.log(rad);
+                    newX = rad + Math.floor(Math.random() * (window.innerWidth - rad2));
+                    newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
+                    while (Math.abs(myGamePiece.x - newX) < (window.innerHeight * 0.15)) {
+                        newX = rad + Math.floor(Math.random() * (window.innerWidth - rad2));
                     }
                     while (Math.abs(myGamePiece.y - newY) < (window.innerWidth * 0.2)) {
-                        newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
+                        newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
                     }
                     console.log("X distance between coords: " + Math.abs(myGamePiece.x-newX));
                     console.log("Y distance between coords: " + Math.abs(myGamePiece.y-newY));
                     myGamePiece.x = newX;
                     myGamePiece.y = newY;
                     console.log("Circle coords x: " + myGamePiece.x + " y: " + myGamePiece.y);
-                }
+                //}
+                //clicked = false;
             }
-            myGamePiece.update();
-            if (counter >= 21) {
+            else{
                 myGameArea.clear();
                 myGameArea.stop();
                 stop();
             }
+            myGamePiece.update();
         }
         window.addEventListener("load", function () {
             //GazeCloudAPI.OnCalibrationComplete = function () { ShowHeatMap(); console.log('Gaze Calibration Complete') }

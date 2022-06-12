@@ -16,6 +16,7 @@ var gazeX, gazeY, mouseX, mouseY;
 var rows = [];
 var main = [];
 var clicked = false;
+//document.addEventListener("click", collectData, true);
 function collectData(){
   time = new Date().getTime();
   //eyeX = GazeData.docX;
@@ -51,7 +52,7 @@ window.addEventListener("beforeunload", function (e) {
 });
 
 function logClick(){
-	clicked = true;
+	//clicked = true;
 	collectData();
 }
 //Export as CSV
@@ -127,8 +128,8 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	document.addEventListener("keydown", keyControl);
 	document.addEventListener("keyup", checkShiftUp);
 	// check click for button
-	glass.addEventListener("click", checkClick, false);
-  	img.addEventListener("click", checkClick, false);
+	//glass.addEventListener("click", checkClick, false);
+  	//img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	setInterval(moveToGazeCoords, 30);
 	setInterval(recordCoords, 200);

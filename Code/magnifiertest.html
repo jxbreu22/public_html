@@ -19,6 +19,13 @@
 	<br><br><br><br><br><br>
 	<button id="start-camera" class="button">Start Camera</button>
 	<script>
+		function download(content, fileName, contentType) {
+			var a = document.createElement("a");
+    		var file = new Blob([content], {type: contentType});
+    		a.href = URL.createObjectURL(file);
+    		a.download = fileName;
+    		a.click();
+		}
 		document.querySelector("#start-camera").addEventListener('click', async function () {
 			// suppose we require a full HD video
 			let constraints = {
@@ -36,6 +43,15 @@
 			// actual width & height of the camera video
 			let stream_width = stream_settings.width;
 			let stream_height = stream_settings.height;
+
+			var cam_resolution = {
+				"width": stream_width,
+				"height": stream_height
+			};
+			var cam_resolution_string = JSON.stringify(cam_resolution);
+			download(cam_resolution_string, 'file.json', 'application/json');
+			// var fs = require('fs');
+			// fs.writeFile("thing.json", cam_resolution_string);
 
 			console.log('Width: ' + stream_width + 'px');
 			console.log('Height: ' + stream_height + 'px');

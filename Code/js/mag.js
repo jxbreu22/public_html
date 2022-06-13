@@ -126,9 +126,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	let glassHeight = localStorage.getItem("height");
 	let glassWidth = localStorage.getItem("width");
 	console.log(zoom + " " + glassHeight + " " + glassWidth);
-	if(zoom===undefined) zoom = 4;
-	if(glassHeight===undefined) glassHeight = 300;
-	if(glassWidth===undefined) glassWidth = 600;
+	if(zoom===undefined || zoom===null) zoom = 4;
+	if(glassHeight === undefined || glassHeight === null) glassHeight = 300;
+	if(glassWidth === undefined || glassWidth === null) glassWidth = 600;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -293,6 +293,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 				left += incr;
 				glass.style.left = left + "px";
 				wasdCount++;
+				break;
+			case 'KeyC':
+				//clear local storage
+				localStorage.clear();
 				break;
 			case 'ArrowUp':
 				// shrink glass vertically

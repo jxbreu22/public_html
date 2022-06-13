@@ -122,6 +122,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	/*create magnifier glass:*/
 	glass = document.createElement("DIV");
 	glass.setAttribute("class", "img-magnifier-glass");
+	let zoom = localStorage.getItem("zoom");
+	let glassHeight = localStorage.getItem("height");
+	let glassWidth = localStorage.getItem("width");
+	console.log(zoom + " " + glassHeight + " " + glassWidth);
 	if(zoom===undefined) zoom = 4;
 	if(glassHeight===undefined) glassHeight = 300;
 	if(glassWidth===undefined) glassWidth = 600;
@@ -263,6 +267,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 					console.log("Zoom in");
 					zoom += 1;
 				}
+				localStorage.setItem("zoom", zoom);
 				glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 				break;
 			case 'KeyW':
@@ -293,24 +298,28 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 				// shrink glass vertically
 				glassHeight = parseInt(glass.style.height.slice(0, -2));
 				glassHeight -= 10;
+				localStorage.setItem("height", glassHeight);
 				glass.style.height = glassHeight + "px";
 				break;
 			case 'ArrowDown':
 				// expand glass vertically
 				glassHeight = parseInt(glass.style.height.slice(0, -2));
 				glassHeight += 10;
+				localStorage.setItem("height", glassHeight);
 				glass.style.height = glassHeight + "px";
 				break;
 			case 'ArrowRight':
 				// expand glass horizontally
 				glassWidth = parseInt(glass.style.width.slice(0, -2));
 				glassWidth += 10;
+				localStorage.setItem("width", glassWidth);
 				glass.style.width = glassWidth + "px";
 				break;
 			case 'ArrowLeft':
 				// shrink glass horizontally
 				glassWidth = parseInt(glass.style.width.slice(0, -2));
 				glassWidth -= 10;
+				localStorage.setItem("width", glassWidth);
 				glass.style.width = glassWidth + "px";
 				break;
 			case 'Enter':

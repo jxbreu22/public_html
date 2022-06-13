@@ -27,7 +27,7 @@
         var mx, my;
 
         function startGame() {
-            myGamePiece = new component(15, 720, 325);
+            myGamePiece = new component(25, 720, 325);
             myGameArea.start();
         }
 
@@ -146,13 +146,16 @@
                 if (myGamePiece.clicked() == true) {
                     counter++;
                     //console.log(counter);
-                    newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
-                    newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
-                    while (Math.abs(myGamePiece.x - newX) < (window.innerHeight * 0.2)) {
-                        newX = 25 + Math.floor(Math.random() * (window.innerWidth - 50));
+                    rad = myGamePiece.radius * 2;
+                    rad2 = myGamePiece.radius * 4;
+                    //console.log(rad);
+                    newX = rad + Math.floor(Math.random() * (window.innerWidth - rad2));
+                    newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
+                    while (Math.abs(myGamePiece.x - newX) < (window.innerHeight * 0.15)) {
+                        newX = rad + Math.floor(Math.random() * (window.innerWidth - rad2));
                     }
                     while (Math.abs(myGamePiece.y - newY) < (window.innerWidth * 0.2)) {
-                        newY = 25 + Math.floor(Math.random() * (window.innerHeight - 50));
+                        newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
                     }
                     console.log("X distance between coords: " + Math.abs(myGamePiece.x-newX));
                     console.log("Y distance between coords: " + Math.abs(myGamePiece.y-newY));

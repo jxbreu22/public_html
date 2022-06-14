@@ -80,30 +80,35 @@
 		/* ************************* call magnify function *******************************/
 		magnify("myimage", 4, start, stop);
 		/*********************************************************************************/
-		window.addEventListener("onbeforeunload", sendJSON(expVidSet));
-		function sendJSON(exp) {
-			// Creating a XHR object
-			let xhr = new XMLHttpRequest();
-			let url = "js/submit.php";
+		window.addEventListener("keydown", sendJSON(e, expVidSet));
 
-			// open a connection
-			xhr.open("POST", url, true);
+		function sendJSON(e, exp) {
+			switch (e.code) {
+				case "KeyP":
+					// Creating a XHR object
+					let xhr = new XMLHttpRequest();
+					let url = "js/submit.php";
 
-			// Set the request header i.e. which type of content you are sending
-			xhr.setRequestHeader("Content-Type", "application/json");
+					// open a connection
+					xhr.open("POST", url, true);
 
-			// Create a state change callback
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4 && xhr.status === 200) {
-					// Print received data from server
-					result.innerHTML = this.responseText;
-				}
-			};
-			// Converting JSON data to string
-			var data = JSON.stringify(exp);
+					// Set the request header i.e. which type of content you are sending
+					xhr.setRequestHeader("Content-Type", "application/json");
+					
+					let result = document.querySelector('.result');
+					// Create a state change callback
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4 && xhr.status === 200) {
+							// Print received data from server
+							result.innerHTML = this.responseText;
+						}
+					};
+					// Converting JSON data to string
+					var data = JSON.stringify(exp);
 
-			// Sending data with the request
-			xhr.send(data);
+					// Sending data with the request
+					xhr.send(data);
+			}
 		}
 	</script>
 

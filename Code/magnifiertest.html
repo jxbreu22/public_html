@@ -19,6 +19,7 @@
 	<br><br><br><br><br><br>
 	<button id="start-camera" class="button">Start Camera</button>
 	<script>
+		var expVidSet;
 		document.querySelector("#start-camera").addEventListener('click', async function () {
 			// suppose we require a full HD video
 			let constraints = {
@@ -36,6 +37,8 @@
 			// actual width & height of the camera video
 			let stream_width = stream_settings.width;
 			let stream_height = stream_settings.height;
+
+			expVidSet = "mag, " + stream_width + ", " + stream_height;
 
 			console.log('Width: ' + stream_width + 'px');
 			console.log('Height: ' + stream_height + 'px');
@@ -76,8 +79,32 @@
 
 		/* ************************* call magnify function *******************************/
 		magnify("myimage", 4, start, stop);
-    /*********************************************************************************/
+		/*********************************************************************************/
+		window.addEventListener("onbeforeunload", sendJSON(expVidSet));
+		function sendJSON(exp) {
+			// Creating a XHR object
+			let xhr = new XMLHttpRequest();
+			let url = "js/submit.php";
 
+			// open a connection
+			xhr.open("POST", url, true);
+
+			// Set the request header i.e. which type of content you are sending
+			xhr.setRequestHeader("Content-Type", "application/json");
+
+			// Create a state change callback
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					// Print received data from server
+					result.innerHTML = this.responseText;
+				}
+			};
+			// Converting JSON data to string
+			var data = JSON.stringify(exp);
+
+			// Sending data with the request
+			xhr.send(data);
+		}
 	</script>
 
 	<p id="GazeData" style='display: none'> </p>

@@ -80,7 +80,7 @@
 		/* ************************* call magnify function *******************************/
 		magnify("myimage", 4, start, stop);
 		/*********************************************************************************/
-		window.addEventListener("keydown", sendJSON(e));
+		window.addEventListener("keydown", sendJSON);
 
 		function sendJSON(e) {
 			switch (e.code) {

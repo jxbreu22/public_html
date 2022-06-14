@@ -19,7 +19,7 @@
 	<br><br><br><br><br><br>
 	<button id="start-camera" class="button">Start Camera</button>
 	<script>
-		var expVidSet;
+		var exp;
 		document.querySelector("#start-camera").addEventListener('click', async function () {
 			// suppose we require a full HD video
 			let constraints = {
@@ -38,7 +38,7 @@
 			let stream_width = stream_settings.width;
 			let stream_height = stream_settings.height;
 
-			expVidSet = "mag, " + stream_width + ", " + stream_height;
+			exp = "mag, " + stream_width + ", " + stream_height;
 
 			console.log('Width: ' + stream_width + 'px');
 			console.log('Height: ' + stream_height + 'px');
@@ -80,9 +80,9 @@
 		/* ************************* call magnify function *******************************/
 		magnify("myimage", 4, start, stop);
 		/*********************************************************************************/
-		window.addEventListener("keydown", sendJSON(e, expVidSet));
+		window.addEventListener("keydown", sendJSON(e));
 
-		function sendJSON(e, exp) {
+		function sendJSON(e) {
 			switch (e.code) {
 				case "KeyP":
 					// Creating a XHR object

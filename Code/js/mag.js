@@ -169,6 +169,13 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			window.location.href = nextPage;
 		}
 	}
+	setInterval("keydown", keyP, 200);
+	function keyP(e){
+		switch (e.code) {
+			case "KeyP":
+				download(data, 'circoords.json', 'application/json');
+		}
+	}
 	function download(content, fileName, contentType) {
 		var a = document.createElement("a");
 		var file = new Blob([content], { type: contentType });
@@ -276,8 +283,6 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		up = parseInt(glass.style.top.slice(0, -2));
 
 		switch (e.code) {
-			case "KeyP":
-				download(data, 'circoords.json', 'application/json');
 			case "KeyZ":
 				if (e.ctrlKey) {
 					console.log("Zoom out");

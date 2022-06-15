@@ -62,6 +62,7 @@
                     console.log("Mouse coords x: " + x + " y: " + y);
                     mx = x;
                     my = y;
+                    exp += "click, " + mx + ", " + y + "; ";
                 }
                 const canvas = document.querySelector('canvas')
                 canvas.addEventListener('mousedown', function (e) {
@@ -157,11 +158,15 @@
                     while (Math.abs(myGamePiece.y - newY) < (window.innerWidth * 0.2)) {
                         newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
                     }
+                    var xDist = Math.abs(myGamePiece.x-newX);
+                    var yDist = Math.abs(myGamePiece.y-newY);
                     console.log("X distance between coords: " + Math.abs(myGamePiece.x-newX));
                     console.log("Y distance between coords: " + Math.abs(myGamePiece.y-newY));
                     myGamePiece.x = newX;
                     myGamePiece.y = newY;
                     console.log("Circle coords x: " + myGamePiece.x + " y: " + myGamePiece.y);
+                    exp += "circle, " + myGamePiece.x + ", " + myGamePiece.y + ", " + xDist 
+                        + ", " + yDist + "; ";
                 }
             }
             myGamePiece.update();
@@ -189,10 +194,21 @@
         }
         start();
         GazeCloudAPI.OnResult = function (GazeData) { GazeData.state } 
+        function exitClick(){
+            var data = JSON.stringify(exp);
+			download(data, 'circle_2.json', 'application/json');
+            window.location.href = '../../index.html';
+        }
+        function download(content, fileName, contentType) {
+            var a = document.createElement("a");
+            var file = new Blob([content], { type: contentType });
+            a.href = URL.createObjectURL(file);
+            a.download = fileName;
+            a.click();
+        }
     </script>
-    <form action="../../index.html">
-        <input type="submit" value="Index">
-    </form>
+    <script src="../js/mag.js"></script>
+    <button onclick="exitClick()">Index</button>
     <p id="GazeData" style='display: none'> </p>
     <p id="HeadPhoseData" style='display: none'> </p>
     <p id="HeadRotData" style='display: none'> </p>

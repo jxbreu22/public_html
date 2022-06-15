@@ -21,7 +21,7 @@ setInterval(recordCoords, 200);
 function collectData() {
 	time = new Date().getTime();
 	var row = + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
-	console.log(" Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
@@ -286,10 +286,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		switch (e.code) {
 			case "KeyZ":
 				if (e.ctrlKey) {
-					console.log("Zoom out");
+					//console.log("Zoom out");
 					zoom -= 1;
 				} else {
-					console.log("Zoom in");
+					//console.log("Zoom in");
 					zoom += 1;
 				}
 				localStorage.setItem("zoom", zoom);
@@ -391,7 +391,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			case 'ShiftLeft':
 				if (!hLock) {
 					hLock = true;
-					console.log("Setting hLock true");
+					//console.log("Setting hLock true");
 					//glass.style.border = "6px solid #03befc";
 					hLockCount++;
 				}
@@ -400,7 +400,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 				displayInfo();
 				break;
 			default:
-				console.log(e.code);
+				//console.log(e.code);
 		}
 		x = left + w;
 		y = up + h;
@@ -410,7 +410,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	function checkShiftUp(e) {
 		if (e.code == 'ShiftLeft') {
 			hLock = false;
-			console.log("Setting hLock false");
+			//console.log("Setting hLock false");
 			//glass.style.border = "6px solid #F542f5";
 		}
 	}

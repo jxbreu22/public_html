@@ -142,7 +142,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
   	img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	setInterval(moveToGazeCoords, 30);
-	setInterval(recordCoords, 200);
+	setInterval(recordCoords, 20);
 
 	function checkClick(e) {
 		var pos, x, y;

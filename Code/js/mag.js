@@ -20,10 +20,9 @@ setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
 function collectData() {
 	time = new Date().getTime();
-	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
-	console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+	var row = + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
+	console.log(" Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	data = JSON.stringify(exp);
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
 	else exp+=row + "; ";
@@ -165,6 +164,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
+			data = JSON.stringify(exp);
 			download(data, 'mag.json', 'application/json');
 			window.location.href = nextPage;
 		}
@@ -173,6 +173,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	function keyP(e){
 		switch (e.code) {
 			case "KeyP":
+				data = JSON.stringify(exp);
 				download(data, 'circoords.json', 'application/json');
 		}
 	}

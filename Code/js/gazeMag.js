@@ -138,8 +138,8 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	document.addEventListener("keydown", keyControl);
 	document.addEventListener("keyup", checkShiftUp);
 	// check click for button
-	//glass.addEventListener("click", checkClick, false);
-  	//img.addEventListener("click", checkClick, false);
+	glass.addEventListener("click", checkClick, false);
+  	img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	setInterval(moveToGazeCoords, 30);
 	setInterval(recordCoords, 200);
@@ -149,6 +149,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		pos = getCursorPos(e);
 		x = pos.x;
 		y = pos.y;
+		exp += "click, " + x + ", " + y + "; ";
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {

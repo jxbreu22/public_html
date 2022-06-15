@@ -176,6 +176,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		a.download = fileName;
 		a.click();
 	}
+	function exitClick(){
+		download(data, 'mag.json', 'application/json');
+		window.location.href = '../../index.html';
+	}
 
 	function recordCoords() {
 		var x, y;

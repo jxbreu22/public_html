@@ -166,7 +166,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			coordsString = '[' + x + ', ' + y + '],';
 			gazeX = x;
 			gazeY = y;
-			//console.log("Gaze: " + coordsString);
+			console.log("Gaze: " + coordsString);
 		}
 		catch (TypeError){
 			//.log(TypeError);

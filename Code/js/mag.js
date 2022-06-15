@@ -113,17 +113,17 @@ function PlotGaze(GazeData) {
 	var gaze = document.getElementById("gaze");
 	gx -= gaze.clientWidth / 2;
 	gy -= gaze.clientHeight / 2;
-	gaze.style.left = gx + "px";
-	gaze.style.top = gy + "px";
+	//gaze.style.left = gx + "px";
+	//gaze.style.top = gy + "px";
 
-	if (GazeData.state != 0) {
+	/*if (GazeData.state != 0) {
 		if (gaze.style.display == 'block')
 			gaze.style.display = 'none';
 	}
 	else {
 		if (gaze.style.display == 'none')
 			gaze.style.display = 'block';
-	}
+	}*/
 	//console.log("GAZE: " + GazeData.docX + " " + GazeData.docY);
 }
 

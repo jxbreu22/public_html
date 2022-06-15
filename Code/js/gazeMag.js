@@ -22,8 +22,8 @@ window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 function collectData(){
 	time = new Date().getTime();
-	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
-	console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+	var row = time + ", " + gazeX + ", " + gazeY + "; " ;//+ mouseX + ", " + mouseY + "; ";
+	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	data = JSON.stringify(exp);
 	clicked = false;

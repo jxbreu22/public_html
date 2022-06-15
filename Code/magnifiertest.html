@@ -38,7 +38,8 @@
 			let stream_width = stream_settings.width;
 			let stream_height = stream_settings.height;
 
-			exp = "mag, \\n" + stream_width + ", \\n" + stream_height;
+			exp = "mag, " + stream_width + ", " + stream_height + "; ";
+			localStorage.setItem("data", exp);
 			var data = JSON.stringify(exp);
 			download(data, 'magnifier_test.json', 'application/json');
 

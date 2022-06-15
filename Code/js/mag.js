@@ -12,20 +12,21 @@ var timesString = "";
 var coordsString = "";
 var glassWidth, glassHeight, zoom;
 var gazeX, gazeY, mouseX, mouseY;
-//Data Collection
-var rows = [];
-var main = [];
 var clicked = false;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
 function collectData(){
   time = new Date().getTime();
-  var row = [clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY];
+  var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY;
   console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+  var exp = localStorage.getItem("data");
+  if(exp===null || exp===undefined) exp = row;
+  else exp+=row + "; ";
+  localStorage.setItem("data", exp);
+  console.log(exp);
   //+ " mouseX: " + mouseX + " mouseY: " + mouseY);
   clicked = false;
-  main+=row;
 }
 function recordCoords() {
 	var x, y;
@@ -125,7 +126,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	let zoom = localStorage.getItem("zoom");
 	let glassHeight = localStorage.getItem("height");
 	let glassWidth = localStorage.getItem("width");
-	console.log(zoom + " " + glassHeight + " " + glassWidth);
+	//console.log(zoom + " " + glassHeight + " " + glassWidth);
 	if(zoom===undefined || zoom===null) zoom = 4;
 	if(glassHeight === undefined || glassHeight === null) glassHeight = 300;
 	if(glassWidth === undefined || glassWidth === null) glassWidth = 600;

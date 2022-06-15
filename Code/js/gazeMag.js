@@ -18,6 +18,7 @@ var main = [];
 var clicked = false;
 var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
+window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 function collectData(){
 	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
@@ -95,7 +96,13 @@ function PlotGaze(GazeData) {
 	}
 	//console.log("GAZE: " + GazeData.docX + " " + GazeData.docY);
 }
-
+function download(content, fileName, contentType) {
+	var a = document.createElement("a");
+	var file = new Blob([content], { type: contentType });
+	a.href = URL.createObjectURL(file);
+	a.download = fileName;
+	a.click();
+}
 function magnify(imgID, doc, nextPage, btnCoords) {
 	/* *************************** CHANGE DEFAULT ZOOM LEVEL HERE *********************************/
 	//var zoom;// = 4;
@@ -148,14 +155,6 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			window.location.href = nextPage;
 		}
 	}
-	function download(content, fileName, contentType) {
-		var a = document.createElement("a");
-		var file = new Blob([content], { type: contentType });
-		a.href = URL.createObjectURL(file);
-		a.download = fileName;
-		a.click();
-	}
-
 	function recordCoords() {
 		var x, y;
 		try{

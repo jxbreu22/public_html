@@ -179,7 +179,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			window.location.href = nextPage;
 		}
 	}
-	setInterval("keydown", keyP, 200);
+	document.addEventListener("keydown", keyP);
 	function keyP(e){
 		switch (e.code) {
 			case "KeyP":

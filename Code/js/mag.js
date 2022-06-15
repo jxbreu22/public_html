@@ -13,16 +13,16 @@ var coordsString = "";
 var glassWidth, glassHeight, zoom;
 var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
+var exp, data;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
 function collectData() {
 	time = new Date().getTime();
 	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY;
-	bugout.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+	console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	var data = JSON.stringify(exp);
-	//download(data, 'mag.json', 'application/json');
+	data = JSON.stringify(exp);
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
 	else exp+=row + "; ";
@@ -164,9 +164,16 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
-			bugout.downloadLog();
+			download(data, 'mag.json', 'application/json');
 			window.location.href = nextPage;
 		}
+	}
+	function download(content, fileName, contentType) {
+		var a = document.createElement("a");
+		var file = new Blob([content], { type: contentType });
+		a.href = URL.createObjectURL(file);
+		a.download = fileName;
+		a.click();
 	}
 
 	function recordCoords() {

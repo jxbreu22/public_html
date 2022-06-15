@@ -18,8 +18,11 @@ window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
 function collectData() {
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+	console.log(page);
 	time = new Date().getTime();
-	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY;
+	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
 	console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	data = JSON.stringify(exp);

@@ -1,3 +1,5 @@
+import { Debugout } from 'debugout.js';
+const bugout = new Debugout();
 const tasks = ["instr_calib", "pr1b", "pr2b", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10",
 	"instr", "bp1", "bq1", "bp2", "bq2"];
 var mouseControl = true;
@@ -13,8 +15,6 @@ var coordsString = "";
 var glassWidth, glassHeight, zoom;
 var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
-import { Debugout } from 'debugout.js';
-const bugout = new Debugout();
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
@@ -166,6 +166,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
+			bugout.downloadLog();
 			window.location.href = nextPage;
 		}
 	}

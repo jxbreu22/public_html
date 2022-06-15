@@ -16,7 +16,7 @@ var clicked = false;
 var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
-setInterval(recordCoords, 200);
+setInterval(recordCoords, 20);
 function collectData() {
 	time = new Date().getTime();
 	var row = + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";

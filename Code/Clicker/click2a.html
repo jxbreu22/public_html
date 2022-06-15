@@ -24,7 +24,7 @@
     <script>
         var myGamePiece;
         var counter = 0;
-        var mx, my;
+        var mx, my, exp;
 
         function startGame() {
             myGamePiece = new component(25, 720, 325);
@@ -157,11 +157,17 @@
                     while (Math.abs(myGamePiece.y - newY) < (window.innerWidth * 0.2)) {
                         newY = rad + Math.floor(Math.random() * (window.innerHeight - rad2));
                     }
+                    var xDist = Math.abs(myGamePiece.x-newX);
+                    var yDist = Math.abs(myGamePiece.y-newY);
                     console.log("X distance between coords: " + Math.abs(myGamePiece.x-newX));
                     console.log("Y distance between coords: " + Math.abs(myGamePiece.y-newY));
                     myGamePiece.x = newX;
                     myGamePiece.y = newY;
                     console.log("Circle coords x: " + myGamePiece.x + " y: " + myGamePiece.y);
+                    exp = "2, circle, " + myGamePiece.x + ", " + myGamePiece.y + ", " + xDist 
+                        + ", " + yDist + "; ";
+                    var data = JSON.stringify(exp);
+			        download(data, 'circle_2.json', 'application/json');
                 }
             }
             myGamePiece.update();

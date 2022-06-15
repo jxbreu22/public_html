@@ -13,24 +13,29 @@ var coordsString = "";
 var glassWidth, glassHeight, zoom;
 var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
+import { Debugout } from 'debugout.js';
+const bugout = new Debugout();
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
-function collectData(){
-  time = new Date().getTime();
-  var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY;
-  console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
-  var exp = localStorage.getItem("data");
-  if(exp===null || exp===undefined) exp = row;
-  else exp+=row + "; ";
-  localStorage.setItem("data", exp);
-  alert(localStorage.getItem("data"));
-  //+ " mouseX: " + mouseX + " mouseY: " + mouseY);
-  clicked = false;
+function collectData() {
+	time = new Date().getTime();
+	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY;
+	bugout.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
+	exp += row;
+	var data = JSON.stringify(exp);
+	//download(data, 'mag.json', 'application/json');
+	/*var exp = localStorage.getItem("data");
+	if(exp===null || exp===undefined) exp = row;
+	else exp+=row + "; ";
+	localStorage.setItem("data", exp);
+	alert(localStorage.getItem("data"));*/
+	//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
+	clicked = false;
 }
 function recordCoords() {
 	var x, y;
-	try{
+	try {
 		gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 		x = parseFloat(gazeData[0]).toFixed(2);
 		y = parseFloat(gazeData[1]).toFixed(2);
@@ -39,7 +44,7 @@ function recordCoords() {
 		gazeY = y;
 		//console.log("Gaze: " + coordsString);
 	}
-	catch (TypeError){
+	catch (TypeError) {
 		//.log(TypeError);
 		return;
 	}
@@ -52,11 +57,11 @@ function writeToText(rows) {
 		s.write(x + ", ");
 	}
 	s.write("/n");
-    //s.Close();
+	//s.Close();
 }*/
-function sendPHP(){
+function sendPHP() {
 	var data = new FormData();
-	for (x in main){
+	for (x in main) {
 		data.append(main[i]);
 	}
 	var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
@@ -67,15 +72,15 @@ window.addEventListener("beforeunload", function (e) {
 	sendPHP();
 });
 
-function logClick(){
+function logClick() {
 	clicked = true;
 	collectData();
 }
 //Export as CSV
-function exportCSV(){
+function exportCSV() {
 	var main = exportMain();
 	let csvContent = "data:text/csv;charset=utf-8,";
-	main.forEach(function(rowArray) {
+	main.forEach(function (rowArray) {
 		let row = rowArray.join(",");
 		csvContent += row + "\r\n";
 	});
@@ -127,9 +132,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	let glassHeight = localStorage.getItem("height");
 	let glassWidth = localStorage.getItem("width");
 	//console.log(zoom + " " + glassHeight + " " + glassWidth);
-	if(zoom===undefined || zoom===null) zoom = 4;
-	if(glassHeight === undefined || glassHeight === null) glassHeight = 300;
-	if(glassWidth === undefined || glassWidth === null) glassWidth = 600;
+	if (zoom === undefined || zoom === null) zoom = 4;
+	if (glassHeight === undefined || glassHeight === null) glassHeight = 300;
+	if (glassWidth === undefined || glassWidth === null) glassWidth = 600;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -140,7 +145,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 	bw = 3;
 	w = glass.offsetWidth / 2;
-	h = glass.offsetHeight /2;
+	h = glass.offsetHeight / 2;
 	/* Move the mag to mouse (when mouseControl is true):*/
 	glass.addEventListener("mousemove", moveToMouse);
 	img.addEventListener("mousemove", moveToMouse);
@@ -149,7 +154,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	document.addEventListener("keyup", checkShiftUp);
 	// check click for button
 	glass.addEventListener("click", checkClick, false);
-  	img.addEventListener("click", checkClick, false);
+	img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	//setInterval(moveToGazeCoords, 30);
 
@@ -161,13 +166,13 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
-		  window.location.href = nextPage;
+			window.location.href = nextPage;
 		}
 	}
 
 	function recordCoords() {
 		var x, y;
-		try{
+		try {
 			gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 			x = parseFloat(gazeData[0]).toFixed(2);
 			y = parseFloat(gazeData[1]).toFixed(2);
@@ -176,7 +181,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			gazeY = y;
 			//console.log("Gaze: " + coordsString);
 		}
-		catch (TypeError){
+		catch (TypeError) {
 			//.log(TypeError);
 			return;
 		}
@@ -244,12 +249,12 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		y = top_new + h;
 
 		/*old code to directly set the position of the magnifier glass:*/
-		//glass.style.left = (x - w) + "px";
-		//glass.style.top = (y - h) + "px";
+	//glass.style.left = (x - w) + "px";
+	//glass.style.top = (y - h) + "px";
 
-		/*display what the magnifier glass "sees":
-		glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
-	}*/
+	/*display what the magnifier glass "sees":
+	glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+}*/
 
 
 	/* Handle keypresses to control mag attributes */

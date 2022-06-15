@@ -63,6 +63,7 @@
                     //console.log("Mouse coords x: " + x + " y: " + y);
                     mx = x;
                     my = y;
+                    exp += "click, " + mx + ", " + y + "; ";
                 }
                 const canvas = document.querySelector('canvas')
                 canvas.addEventListener('mousedown', function (e) {

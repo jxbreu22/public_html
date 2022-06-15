@@ -19,7 +19,7 @@ window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 function collectData() {
 	time = new Date().getTime();
-	var row = + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
+	var row = + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");
@@ -46,7 +46,7 @@ function recordCoords() {
 		return;
 	}
 }
-canvas.addEventListener('mousedown', function (e) {
+/*canvas.addEventListener('mousedown', function (e) {
 	getCursorPosition(canvas, e);
 })
 function getCursorPosition(canvas, event) {
@@ -56,7 +56,7 @@ function getCursorPosition(canvas, event) {
 	//console.log("Mouse coords x: " + x + " y: " + y);
 	mx = x;
 	my = y;
-}
+}*/
 /*
 var fso = CreateObject("Scripting.FileSystemObject"); 
 var s   = fso.CreateTextFile("../out/test.txt", True);

@@ -115,7 +115,7 @@ function PlotGaze(GazeData) {
 	gy -= gaze.clientHeight / 2;
 	//gaze.style.left = gx + "px";
 	//gaze.style.top = gy + "px";
-
+	gaze.style.display = 'none';
 	/*if (GazeData.state != 0) {
 		if (gaze.style.display == 'block')
 			gaze.style.display = 'none';

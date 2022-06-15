@@ -94,7 +94,7 @@
 
 					// Set the request header i.e. which type of content you are sending
 					xhr.setRequestHeader("Content-Type", "application/json");
-					
+
 					let result = document.querySelector('.result');
 					// Create a state change callback
 					xhr.onreadystatechange = function () {
@@ -110,6 +110,13 @@
 					// Sending data with the request
 					xhr.send(data);
 			}
+		}
+		function download(content, fileName, contentType) {
+			var a = document.createElement("a");
+			var file = new Blob([content], { type: contentType });
+			a.href = URL.createObjectURL(file);
+			a.download = fileName;
+			a.click();
 		}
 	</script>
 

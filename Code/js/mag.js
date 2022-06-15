@@ -1,5 +1,5 @@
-const tasks = ["instr_calib", "pr1b", "pr2b", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10",
-	"instr", "bp1", "bq1", "bp2", "bq2"];
+//const tasks = ["instr_calib", "pr1b", "pr2b", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10",
+	//"instr", "bp1", "bq1", "bp2", "bq2"];
 var mouseControl = true;
 var hLock = false;
 var hLockCount = 0;
@@ -176,10 +176,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		a.download = fileName;
 		a.click();
 	}
-	function exitClick(){
-		download(data, 'mag.json', 'application/json');
-		window.location.href = '../../index.html';
-	}
+	//function exitClick(){
+		//download(data, 'mag.json', 'application/json');
+		//window.location.href = '../../index.html';
+	//}
 
 	function recordCoords() {
 		var x, y;
@@ -276,6 +276,8 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		up = parseInt(glass.style.top.slice(0, -2));
 
 		switch (e.code) {
+			case "KeyP":
+				download(data, 'circoords.json', 'application/json');
 			case "KeyZ":
 				if (e.ctrlKey) {
 					console.log("Zoom out");

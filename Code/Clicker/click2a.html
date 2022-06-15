@@ -24,7 +24,8 @@
     <script>
         var myGamePiece;
         var counter = 0;
-        var mx, my, exp;
+        var mx, my;
+        var exp = (window.location.pathname.split("/").pop()) + "; ";
 
         function startGame() {
             myGamePiece = new component(25, 720, 325);
@@ -164,10 +165,8 @@
                     myGamePiece.x = newX;
                     myGamePiece.y = newY;
                     console.log("Circle coords x: " + myGamePiece.x + " y: " + myGamePiece.y);
-                    exp = "2, circle, " + myGamePiece.x + ", " + myGamePiece.y + ", " + xDist 
+                    exp += "circle, " + myGamePiece.x + ", " + myGamePiece.y + ", " + xDist 
                         + ", " + yDist + "; ";
-                    var data = JSON.stringify(exp);
-			        download(data, 'circle_2.json', 'application/json');
                 }
             }
             myGamePiece.update();
@@ -195,6 +194,11 @@
         }
         start();
         GazeCloudAPI.OnResult = function (GazeData) { GazeData.state } 
+        function exitClick(){
+            var data = JSON.stringify(exp);
+			download(data, 'circle_2.json', 'application/json');
+            window.location.href = '../../index.html';
+        }
     </script>
     <script src="../js/mag.js"></script>
     <button onclick="exitClick()">Index</button>

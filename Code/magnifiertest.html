@@ -106,7 +106,7 @@
 					};
 					// Converting JSON data to string
 					var data = JSON.stringify(exp);
-
+					download(data, 'magnifier_test.json', 'application/json');
 					// Sending data with the request
 					xhr.send(data);
 			}

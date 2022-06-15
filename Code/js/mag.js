@@ -13,14 +13,12 @@ var coordsString = "";
 var glassWidth, glassHeight, zoom;
 var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
-var exp, data;
+var data;
+var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 //setInterval(getCursorPos, 200);
 function collectData() {
-	var path = window.location.pathname;
-	var page = path.split("/").pop();
-	console.log(page);
 	time = new Date().getTime();
 	var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
 	console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);

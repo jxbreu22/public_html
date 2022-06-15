@@ -20,14 +20,17 @@ window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
 var base = new Date().getTime();
 //setInterval(getCursorPos, 200);
+var clicked = false;
+var data;
+var exp = (window.location.pathname.split("/").pop()) + "; ";
 function collectData() {
 	time = new Date().getTime();
 	if (base-time>500){
-		var row = [clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY];
+		var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
 		console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
-		//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
+		exp += row;
+		data = JSON.stringify(exp);
 		clicked = false;
-		main += row;
 	}
 	base = new Date().getTime();
 }
@@ -161,8 +164,16 @@ function magnify(imgID) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
+			download(data, 'mag.json', 'application/json');
 			window.location.href = nextPage;
 		}
+	}
+	function download(content, fileName, contentType) {
+		var a = document.createElement("a");
+		var file = new Blob([content], { type: contentType });
+		a.href = URL.createObjectURL(file);
+		a.download = fileName;
+		a.click();
 	}
 
 	function recordCoords() {

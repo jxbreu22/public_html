@@ -109,14 +109,7 @@ function PlotGaze(GazeData) {
 	gaze.style.left = gx + "px";
 	gaze.style.top = gy + "px";
 
-	if (GazeData.state != 0) {
-		if (gaze.style.display == 'block')
-			gaze.style.display = 'none';
-	}
-	else {
-		if (gaze.style.display == 'none')
-			gaze.style.display = 'block';
-	}
+	(gaze.style.display == 'block');
 	//console.log("GAZE: " + GazeData.docX + " " + GazeData.docY);
 }
 
@@ -225,6 +218,7 @@ function magnify(imgID) {
 		}
 		x = parseFloat(gazeData[0]);
 		y = parseFloat(gazeData[1]);
+		PlotGaze;
 	}
 
 	/* mutex is used to avoid multiple click event from

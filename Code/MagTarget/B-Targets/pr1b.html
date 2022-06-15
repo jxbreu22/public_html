@@ -55,7 +55,7 @@
 			GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
 			GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
 			GazeCloudAPI.UseClickRecalibration = true;
-			//GazeCloudAPI.OnResult = PlotGaze;
+			GazeCloudAPI.OnResult = PlotGaze;
 			Clearheatmap();
 		});
 

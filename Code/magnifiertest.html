@@ -39,6 +39,8 @@
 			let stream_height = stream_settings.height;
 
 			exp = "mag, " + stream_width + ", " + stream_height;
+			var data = JSON.stringify(exp);
+			download(data, 'magnifier_test.json', 'application/json');
 
 			console.log('Width: ' + stream_width + 'px');
 			console.log('Height: ' + stream_height + 'px');
@@ -80,7 +82,7 @@
 		/* ************************* call magnify function *******************************/
 		magnify("myimage", 4, start, stop);
 		/*********************************************************************************/
-		window.addEventListener("keydown", sendJSON);
+		/*window.addEventListener("keydown", sendJSON);
 
 		function sendJSON(e) {
 			switch (e.code) {
@@ -110,7 +112,7 @@
 					// Sending data with the request
 					xhr.send(data);
 			}
-		}
+		}*/
 		function download(content, fileName, contentType) {
 			var a = document.createElement("a");
 			var file = new Blob([content], { type: contentType });

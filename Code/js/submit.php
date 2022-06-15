@@ -7,8 +7,5 @@
  $myfile = fopen("$File", "a") or die("Unable to open file!");
  fwrite($myfile, $data);
  fclose($myfile);
- ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
   
  ?>

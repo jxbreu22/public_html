@@ -110,12 +110,12 @@ function PlotGaze(GazeData) {
 	gazeX = gx;
 	gazeY = gy;
 
-	var gaze = document.getElementById("gaze");
-	gx -= gaze.clientWidth / 2;
-	gy -= gaze.clientHeight / 2;
+	//var gaze = document.getElementById("gaze");
+	//gx -= gaze.clientWidth / 2;
+	//gy -= gaze.clientHeight / 2;
 	//gaze.style.left = gx + "px";
 	//gaze.style.top = gy + "px";
-	gaze.style.display = 'none';
+	//gaze.style.display = 'none';
 	/*if (GazeData.state != 0) {
 		if (gaze.style.display == 'block')
 			gaze.style.display = 'none';

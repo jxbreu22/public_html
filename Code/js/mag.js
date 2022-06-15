@@ -1,5 +1,3 @@
-import { Debugout } from 'debugout.js';
-const bugout = new Debugout();
 const tasks = ["instr_calib", "pr1b", "pr2b", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10",
 	"instr", "bp1", "bq1", "bp2", "bq2"];
 var mouseControl = true;

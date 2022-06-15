@@ -40,7 +40,7 @@
 
 		/* ************************* call magnify function *******************************/
 		var btnCoords = { x_lower : 851, y_lower : 247, x_upper : 945, y_upper : 272 };
-    magnify("myimage", 5, "pr2b.html", btnCoords);
+    	magnify("myimage", 5, "pr2b.html", btnCoords);
 		GazeCloudAPI.StartEyeTracking();
 		GazeCloudAPI.OnResult = function (GazeData) { GazeData.state }
 		// 0: valid gaze data; -1 : face tracking lost, 1 : gaze data uncalibrated GazeData.docX 

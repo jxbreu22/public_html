@@ -17,7 +17,6 @@ var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 200);
-setInterval(getCursorPos, 200);
 function collectData() {
 	time = new Date().getTime();
 	var row = + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
@@ -46,6 +45,17 @@ function recordCoords() {
 		//.log(TypeError);
 		return;
 	}
+}
+canvas.addEventListener('mousedown', function (e) {
+	getCursorPosition(canvas, e);
+})
+function getCursorPosition(canvas, event) {
+	const rect = canvas.getBoundingClientRect();
+	const x = event.clientX - rect.left;
+	const y = event.clientY - rect.top;
+	//console.log("Mouse coords x: " + x + " y: " + y);
+	mx = x;
+	my = y;
 }
 /*
 var fso = CreateObject("Scripting.FileSystemObject"); 
@@ -218,14 +228,6 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		y = y - window.pageYOffset;
 		mouseX = x;
 		mouseY = y;
-		if (mouseX === undefined || mouseY === undefined){
-			const rect = innerHTML.canvas.getBoundingClientRect();
-			const x = e.clientX - rect.left;
-			const y = e.clientY - rect.top;
-			//console.log("Mouse coords x: " + x + " y: " + y);
-			mx = x;
-			my = y;
-		}
 		return { x: x, y: y };
 	}
 

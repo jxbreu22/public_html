@@ -1,7 +1,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="../../css/magStyle.css" />
-	<script src="../../js/mag.js"> </script>
+	<script src= "../../js/mag.js"> </script>
 	<script src="https://api.gazerecorder.com/GazeCloudAPI.js?v=1.2"></script>
 	<script src="https://api.gazerecorder.com/heatmapLive.js"></script>
 </head>
@@ -26,7 +26,7 @@
 			GazeCloudAPI.OnCd = function () { console.log('Camera access denied') }
 			GazeCloudAPI.OnError = function (msg) { console.log('err: ' + msg) }
 			GazeCloudAPI.UseClickRecalibration = true;
-			//GazeCloudAPI.OnResult = PlotGaze;
+			GazeCloudAPI.OnResult = PlotGaze;
 		});
 
 		function start() {
@@ -59,3 +59,5 @@
 	</div>
 
 </body>
+
+</html>

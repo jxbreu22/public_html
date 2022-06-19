@@ -22,7 +22,7 @@ window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 function collectData(){
 	time = new Date().getTime();
-	var row = time + ", " + gazeX + ", " + gazeY + "; " ;//+ mouseX + ", " + mouseY + "; ";
+	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; " ;//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	data = JSON.stringify(exp);
@@ -149,7 +149,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		pos = getCursorPos(e);
 		x = pos.x;
 		y = pos.y;
-		exp += "click, " + x + ", " + y + "; ";
+		exp += "click_x_y, " + x + ", " + y + "; ";
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {

@@ -26,7 +26,7 @@ var exp = (window.location.pathname.split("/").pop()) + "; ";
 function collectData() {
 	time = new Date().getTime();
 	if (base-time>500){
-		var row = clicked + ", " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
+		var row = "Time_gazex_y_mousex_y, " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
 		console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 		exp += row;
 		data = JSON.stringify(exp);

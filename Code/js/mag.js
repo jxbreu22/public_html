@@ -25,7 +25,7 @@ function collectData(set) {
 	exp += row;
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
-	else exp+=row + "; ";
+	else exp +=row + "; ";
 	localStorage.setItem("data", exp);
 	alert(localStorage.getItem("data"));*/
 	//+ " mouseX: " + mouseX + " mouseY: " + mouseY);

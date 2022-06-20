@@ -33,6 +33,7 @@ function collectData() {
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
+	console.log(tabl);
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
 	else exp+=row + "; ";

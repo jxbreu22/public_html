@@ -23,7 +23,19 @@ var base = new Date().getTime();
 var clicked = false;
 var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
+setInterval(leadUp, 40);
+var data = [];
+function leadUp(){
+	time = new Date().getTime();
+	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
+		+ ", " + mouseX + ", " + mouseY + "; "; 
+	if(mouseX != undefined && mouseY != undefined) data.push(row);
+	if (data.length > 6) data.shift();
+}
 function collectData() {
+	for(let i = 0; i < data.length - 1; i++){
+		exp += data[i];
+	}
 	time = new Date().getTime();
 	if (base-time>500){
 		var row = "Time_gazex_y_mousex_y, " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";

@@ -16,11 +16,22 @@ var gazeX, gazeY, mouseX, mouseY;
 var rows = [];
 var main = [];
 var clicked = false;
-var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
-function collectData(){
+setInterval(leadUp, 40);
+var data = [];
+function leadUp(){
+	time = new Date().getTime();
+	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
+		+ ", " + mouseX + ", " + mouseY + "; "; 
+	if(mouseX != undefined && mouseY != undefined) data.push(row);
+	if (data.length > 6) data.shift();
+}
+function collectData() {
+	for(let i = 0; i < data.length - 1; i++){
+		exp += data[i];
+	}
 	time = new Date().getTime();
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; " ;//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);

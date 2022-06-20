@@ -13,7 +13,6 @@
 	var glassWidth, glassHeight, zoom;
 	var gazeX, gazeY, mouseX, mouseY;
 	var clicked = false;
-	var data;
 	var exp = (window.location.pathname.split("/").pop()) + "; ";
 	window.addEventListener("click", logClick, true);
 	setInterval(recordCoords, 20);

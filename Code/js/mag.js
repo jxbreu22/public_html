@@ -18,23 +18,11 @@ var exp = (window.location.pathname.split("/").pop()) + "; ";
 var exp2 = exp;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
-setInterval(leadUp, 25);
-var tabl = [];
-function leadUp(){
+function collectData(set) {
 	time = new Date().getTime();
-	var row2 = "LEADUP_Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
-	console.log(row2);
-	tabl+=row2;
-	if(tabl.length>5){
-		tabl.shift();
-	}
-}
-function collectData() {
-	time = new Date().getTime();
-	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	var row = set + ", Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	exp += tabl[0] + tabl[1] + tabl[2] + tabl[3] + tabl[4];
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
 	else exp+=row + "; ";
@@ -53,6 +41,7 @@ function recordCoords() {
 		gazeX = x;
 		gazeY = y;
 		//console.log("Gaze: " + coordsString);
+		collectData("base");
 	}
 	catch (TypeError) {
 		//.log(TypeError);
@@ -95,7 +84,7 @@ window.addEventListener("beforeunload", function (e) {
 
 function logClick() {
 	clicked = true;
-	collectData();
+	collectData("trial");
 }
 //Export as CSV
 function exportCSV() {

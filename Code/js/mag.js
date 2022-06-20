@@ -23,6 +23,7 @@ var tabl = [];
 function leadUp(){
 	time = new Date().getTime();
 	var row2 = "LEADUP_Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	console.log(row2);
 	tabl+=row2;
 	if(tabl.length>5){
 		tabl.shift();

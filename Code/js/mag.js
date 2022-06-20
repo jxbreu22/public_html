@@ -23,10 +23,10 @@
 		time = new Date().getTime();
 		var row = "leaduptime_gazex_y " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 		data.push(row);
-		if (data.length() > 5) data.shift();
+		if (data.length > 5) data.shift();
 	}
 	function collectData() {
-		for(let i = 0; i < data.length(); i++){
+		for(let i = 0; i < data.length; i++){
 			exp += data[i];
 		}
 		time = new Date().getTime();

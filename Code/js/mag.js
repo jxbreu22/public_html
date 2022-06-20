@@ -27,7 +27,7 @@
 		if (data.length > 6) data.shift();
 	}
 	function collectData() {
-		for(let i = 0; i < data.length; i++){
+		for(let i = 0; i < data.length - 1; i++){
 			exp += data[i];
 		}
 		time = new Date().getTime();

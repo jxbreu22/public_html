@@ -19,7 +19,7 @@ window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
 function collectData() {
 	time = new Date().getTime();
-	var row = "Time_gazex_y " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");

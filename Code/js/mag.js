@@ -17,7 +17,7 @@ var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
-setInterval(collectData, 20);
+setInterval(leadUp, 20);
 var data = [];
 function leadUp(){
 	time = new Date().getTime();

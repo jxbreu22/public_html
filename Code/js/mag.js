@@ -17,14 +17,14 @@
 	var exp = (window.location.pathname.split("/").pop()) + "; ";
 	window.addEventListener("click", logClick, true);
 	setInterval(recordCoords, 20);
-	setInterval(leadUp, 20);
+	setInterval(leadUp, 40);
 	var data = [];
 	function leadUp(){
 		time = new Date().getTime();
 		var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
 			+ ", " + mouseX + ", " + mouseY + "; "; 
 		data.push(row);
-		if (data.length > 5) data.shift();
+		if (data.length > 6) data.shift();
 	}
 	function collectData() {
 		for(let i = 0; i < data.length; i++){

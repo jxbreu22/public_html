@@ -21,7 +21,8 @@
 	var data = [];
 	function leadUp(){
 		time = new Date().getTime();
-		var row = "leaduptime_gazex_y " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+		var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
+			+ ", " + mouseX + ", " + mouseY + "; "; 
 		data.push(row);
 		if (data.length > 5) data.shift();
 	}
@@ -30,7 +31,7 @@
 			exp += data[i];
 		}
 		time = new Date().getTime();
-		var row = "Time_gazex_y" + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+		var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 		console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 		exp += row;
 		/*var exp = localStorage.getItem("data");

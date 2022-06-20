@@ -15,8 +15,19 @@ var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
 var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
+var exp2 = exp;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
+setInterval(leadUp, 25);
+var tabl = [];
+function leadUp(){
+	time = new Date().getTime();
+	var row2 = "LEADUP_Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	tabl+=row2;
+	if(tabl.length>5){
+		tabl.shift();
+	}
+}
 function collectData() {
 	time = new Date().getTime();
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
@@ -177,6 +188,11 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
 			data = JSON.stringify(exp);
 			download(data, 'mag.json', 'application/json');
+			for(let i = 0; i < tabl.length(); i++){
+				exp2+=tabl[i];
+			}
+			data2 = JSON.stringify(exp2);
+			download(data2, 'leadup.json', 'application.json');
 			window.location.href = nextPage;
 		}
 	}

@@ -17,9 +17,20 @@ var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
-function collectData() {
+setInterval(collectData, 20);
+var data = [];
+function leadUp(){
 	time = new Date().getTime();
-	var row = "Time_gazex_y " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	var row = "leaduptime_gazex_y " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	data.push(row);
+	if (data.length() > 5) data.shift();
+}
+function collectData() {
+	for(let i = 0; i < data.length(); i++){
+		exp += data[i];
+	}
+	time = new Date().getTime();
+	var row = "Time_gazex_y" + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");

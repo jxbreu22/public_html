@@ -15,17 +15,16 @@ var gazeX, gazeY, mouseX, mouseY;
 var clicked = false;
 var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
-var exp2 = exp;
 window.addEventListener("click", logClick, true);
 setInterval(recordCoords, 20);
-function collectData(set) {
+function collectData() {
 	time = new Date().getTime();
-	var row = set + ", Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
+	var row = + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");
 	if(exp===null || exp===undefined) exp = row;
-	else exp +=row + "; ";
+	else exp+=row + "; ";
 	localStorage.setItem("data", exp);
 	alert(localStorage.getItem("data"));*/
 	//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
@@ -41,7 +40,6 @@ function recordCoords() {
 		gazeX = x;
 		gazeY = y;
 		//console.log("Gaze: " + coordsString);
-		collectData("base");
 	}
 	catch (TypeError) {
 		//.log(TypeError);
@@ -84,7 +82,7 @@ window.addEventListener("beforeunload", function (e) {
 
 function logClick() {
 	clicked = true;
-	collectData("trial");
+	collectData();
 }
 //Export as CSV
 function exportCSV() {
@@ -173,17 +171,12 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		pos = getCursorPos(e);
 		x = pos.x;
 		y = pos.y;
-		exp += "click_x_y, " + x + ", " + y + "; ";
+		exp += "click, " + x + ", " + y + "; ";
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
 			data = JSON.stringify(exp);
 			download(data, 'mag.json', 'application/json');
-			for(let i = 0; i < tabl.length(); i++){
-				exp2+=tabl[i];
-			}
-			data2 = JSON.stringify(exp2);
-			download(data2, 'leadup.json', 'application.json');
 			window.location.href = nextPage;
 		}
 	}

@@ -27,7 +27,7 @@ setInterval(leadUp, 40);
 var data = [];
 function leadUp() {
 	time = new Date().getTime();
-	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY + ";"
+	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";
 	//	+ ", " + mouseX + ", " + mouseY + "; ";
 	data.push(row);
 	if (data.length > 6) data.shift();

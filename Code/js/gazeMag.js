@@ -21,23 +21,48 @@ window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 setInterval(leadUp, 40);
 var data = [];
-function leadUp(){
+function leadUp() {
 	time = new Date().getTime();
-	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
-		+ ", " + mouseX + ", " + mouseY + "; "; 
-	if(mouseX != undefined && mouseY != undefined) data.push(row);
+	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY
+		+ ", " + mouseX + ", " + mouseY + "; ";
+	if (mouseX != undefined && mouseY != undefined) data.push(row);
 	if (data.length > 6) data.shift();
 }
 function collectData() {
-	for(let i = 0; i < data.length - 1; i++){
+	for (let i = 0; i < data.length - 1; i++) {
 		exp += data[i];
 	}
 	time = new Date().getTime();
-	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; " ;//+ mouseX + ", " + mouseY + "; ";
+	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	data = JSON.stringify(exp);
 	clicked = false;
+}
+document.onmousemove = handleMouseMove;
+function handleMouseMove(event) {
+	var eventDoc, doc, body;
+
+	event = event || window.event; // IE-ism
+
+	// If pageX/Y aren't available and clientX/Y are,
+	// calculate pageX/Y - logic taken from jQuery.
+	// (This is to support old IE)
+	if (event.pageX == null && event.clientX != null) {
+		eventDoc = (event.target && event.target.ownerDocument) || document;
+		doc = eventDoc.documentElement;
+		body = eventDoc.body;
+
+		event.pageX = event.clientX +
+			(doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+			(doc && doc.clientLeft || body && body.clientLeft || 0);
+		event.pageY = event.clientY +
+			(doc && doc.scrollTop || body && body.scrollTop || 0) -
+			(doc && doc.clientTop || body && body.clientTop || 0);
+	}
+	gazeX = event.pageX;
+	gazeY = event.pageY;
+	// Use event.pageX / event.pageY here
 }
 /*
 var fso = CreateObject("Scripting.FileSystemObject"); 
@@ -47,11 +72,11 @@ function writeToText(rows) {
 		s.write(x + ", ");
 	}
 	s.write("/n");
-    //s.Close();
+	//s.Close();
 }*/
-function sendPHP(){
+function sendPHP() {
 	var data = new FormData();
-	for (x in main){
+	for (x in main) {
 		data.append(main[i]);
 	}
 	var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
@@ -62,15 +87,15 @@ window.addEventListener("beforeunload", function (e) {
 	sendPHP();
 });
 
-function logClick(){
+function logClick() {
 	//clicked = true;
 	collectData();
 }
 //Export as CSV
-function exportCSV(){
+function exportCSV() {
 	var main = exportMain();
 	let csvContent = "data:text/csv;charset=utf-8,";
-	main.forEach(function(rowArray) {
+	main.forEach(function (rowArray) {
 		let row = rowArray.join(",");
 		csvContent += row + "\r\n";
 	});
@@ -128,9 +153,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	let glassHeight = localStorage.getItem("height");
 	let glassWidth = localStorage.getItem("width");
 	console.log(zoom + " " + glassHeight + " " + glassWidth);
-	if(zoom===undefined || zoom===null) zoom = 4;
-	if(glassHeight === undefined || glassHeight === null) glassHeight = 300;
-	if(glassWidth === undefined || glassWidth === null) glassWidth = 600;
+	if (zoom === undefined || zoom === null) zoom = 4;
+	if (glassHeight === undefined || glassHeight === null) glassHeight = 300;
+	if (glassWidth === undefined || glassWidth === null) glassWidth = 600;
 	glass.style.height = glassHeight + "px";
 	glass.style.width = glassWidth + "px";
 	/*insert magnifier glass:*/
@@ -141,7 +166,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 	bw = 3;
 	w = glass.offsetWidth / 2;
-	h = glass.offsetHeight /2;
+	h = glass.offsetHeight / 2;
 	/* Move the mag to mouse (when mouseControl is true):*/
 	glass.addEventListener("mousemove", moveToMouse);
 	img.addEventListener("mousemove", moveToMouse);
@@ -150,7 +175,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	document.addEventListener("keyup", checkShiftUp);
 	// check click for button
 	glass.addEventListener("click", checkClick, false);
-  	img.addEventListener("click", checkClick, false);
+	img.addEventListener("click", checkClick, false);
 	/* move magnifier towards gaze coordinates */
 	setInterval(moveToGazeCoords, 30);
 	setInterval(recordCoords, 20);
@@ -170,7 +195,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	}
 	function recordCoords() {
 		var x, y;
-		try{
+		try {
 			gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 			x = parseFloat(gazeData[0]).toFixed(2);
 			y = parseFloat(gazeData[1]).toFixed(2);
@@ -179,7 +204,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			gazeY = y;
 			//console.log("Gaze: " + coordsString);
 		}
-		catch (TypeError){
+		catch (TypeError) {
 			//.log(TypeError);
 			return;
 		}
@@ -189,10 +214,10 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	function moveToGazeCoords() {
 		var x, y, left_old, left_new, top_old, top_new, incr;
 		incr = 7;
-		try{
+		try {
 			gazeData = document.getElementById("GazeData").innerHTML.split(" ");
 		}
-		catch (TypeError){
+		catch (TypeError) {
 			return;
 		}
 		x = parseFloat(gazeData[0]);
@@ -256,7 +281,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 					console.log("Zoom in");
 					zoom += 1;
 				}
-				if (zoom < 1 || zoom > 40){
+				if (zoom < 1 || zoom > 40) {
 					zoom = 4;
 				}
 				localStorage.setItem("zoom", zoom);

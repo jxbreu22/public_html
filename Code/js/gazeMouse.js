@@ -25,19 +25,19 @@ var data;
 var exp = (window.location.pathname.split("/").pop()) + "; ";
 setInterval(leadUp, 40);
 var data = [];
-function leadUp(){
+function leadUp() {
 	time = new Date().getTime();
-	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY 
-		+ ", " + mouseX + ", " + mouseY + "; "; 
-	if(mouseX != undefined && mouseY != undefined) data.push(row);
+	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY
+		+ ", " + mouseX + ", " + mouseY + "; ";
+	if (mouseX != undefined && mouseY != undefined) data.push(row);
 	if (data.length > 6) data.shift();
 }
 function collectData() {
-	for(let i = 0; i < data.length - 1; i++){
+	for (let i = 0; i < data.length - 1; i++) {
 		exp += data[i];
 	}
 	time = new Date().getTime();
-	if (base-time>500){
+	if (base - time > 500) {
 		var row = "Time_gazex_y_mousex_y, " + time + ", " + gazeX + ", " + gazeY + ", " + mouseX + ", " + mouseY + "; ";
 		console.log("Clicked: " + clicked + " Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 		exp += row;
@@ -248,11 +248,11 @@ function magnify(imgID) {
 	 The following event is triggered only when mouse is pressed.
 	 */
 	window.addEventListener("keydown", keyControl);
-	function keyControl(e){
-		try{
+	function keyControl(e) {
+		try {
 			switch (e.code) {
-				case("KeyB"):
-		// gets the object on image cursor position
+				case ("KeyB"):
+					// gets the object on image cursor position
 					var tmp = document.elementFromPoint(x + px, y + py);
 					mutex = true;
 					tmp.click();
@@ -260,7 +260,7 @@ function magnify(imgID) {
 					cursor.style.top = (py + y) + "px";
 			}
 		}
-		catch(TypeError){
+		catch (TypeError) {
 			return;
 		}
 	}
@@ -280,7 +280,7 @@ function magnify(imgID) {
 
 	});
 	setInterval(gmUpdate, 5);
-	function gmUpdate(){
+	function gmUpdate() {
 		x = gazeX;
 		y = gazeY;
 		cursor.style.left = (px + x) + "px";

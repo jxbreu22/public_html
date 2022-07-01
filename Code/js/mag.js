@@ -3,6 +3,7 @@
 var mouseControl = true;
 var hLock = false;
 var hLockCount = 0;
+var borde = true;
 var nextTaskIndex = 0;
 var wasdCount = 0;
 var paused = 0;
@@ -411,7 +412,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 				}
 				break;
 			case 'KeyO':
-				glass.style.border = "0px solid #ffffff";
+				if(borde) glass.style.border = "0px solid #ffffff";
+				else glass.style.border= "6px solid #8b8b8b70";
+				borde = !borde;
 				break;
 			case 'ShiftLeft':
 				if (!hLock) {

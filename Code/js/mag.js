@@ -315,6 +315,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 					//console.log("Zoom in");
 					zoom += 1;
 				}
+				if (zoom < 1 || zoom > 40) {
+					zoom = 4;
+				}
 				localStorage.setItem("zoom", zoom);
 				glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 				break;

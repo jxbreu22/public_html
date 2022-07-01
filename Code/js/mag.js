@@ -410,6 +410,9 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 					}
 				}
 				break;
+			case 'KeyO':
+				glass.style.border = "0px solid #ffffff";
+				break;
 			case 'ShiftLeft':
 				if (!hLock) {
 					hLock = true;

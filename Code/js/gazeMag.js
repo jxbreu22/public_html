@@ -22,6 +22,7 @@ window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 setInterval(leadUp, 40);
 var data = [];
+var expjson;
 function leadUp() {
 	time = new Date().getTime();
 	var row = "leaduptime_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";
@@ -37,7 +38,7 @@ function collectData() {
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	data = JSON.stringify(exp);
+	expjson = JSON.stringify(exp);
 	clicked = false;
 }
 document.onmousemove = handleMouseMove;
@@ -190,7 +191,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
-			download(data, 'mag.json', 'application/json');
+			download(expjson, 'mag.json', 'application/json');
 			window.location.href = nextPage;
 		}
 	}

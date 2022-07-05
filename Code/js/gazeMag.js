@@ -38,7 +38,6 @@ function collectData() {
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	//expjson = JSON.stringify(exp);
 	clicked = false;
 }
 document.onmousemove = handleMouseMove;

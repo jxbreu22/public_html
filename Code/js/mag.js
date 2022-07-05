@@ -34,12 +34,6 @@ function collectData() {
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; "; //", " + mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	/*var exp = localStorage.getItem("data");
-	if(exp ===null || exp ===undefined) exp = row;
-	else exp +=row + "; ";
-	localStorage.setItem("data", exp);
-	alert(localStorage.getItem("data"));*/
-	//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
 	clicked = false;
 }
 function recordCoords() {

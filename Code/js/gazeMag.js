@@ -75,33 +75,10 @@ function writeToText(rows) {
 	s.write("/n");
 	//s.Close();
 }*/
-function sendPHP() {
-	var data = new FormData();
-	for (x in main) {
-		data.append(main[i]);
-	}
-	var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
-	xhr.open('post', 'send.php', true);
-	xhr.send(data);
-}
-window.addEventListener("beforeunload", function (e) {
-	sendPHP();
-});
 
 function logClick() {
 	//clicked = true;
 	collectData();
-}
-//Export as CSV
-function exportCSV() {
-	var main = exportMain();
-	let csvContent = "data:text/csv;charset=utf-8,";
-	main.forEach(function (rowArray) {
-		let row = rowArray.join(",");
-		csvContent += row + "\r\n";
-	});
-	var encodedUri = encodeURI(csvContent);
-	window.open(encodedUri);
 }
 function PlotGaze(GazeData) {
 	GazeData.state // 0: valid gaze data; -1 : face tracking lost, 1 : gaze uncalibrated

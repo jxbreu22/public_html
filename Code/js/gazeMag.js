@@ -17,7 +17,7 @@ var gazeX, gazeY, mouseX, mouseY;
 var rows = [];
 var main = [];
 var clicked = false;
-var exp;// = (window.location.pathname.split("/").pop()) + "; ";
+var exp = (window.location.pathname.split("/").pop()) + "; ";
 window.addEventListener("click", logClick, true);
 //document.addEventListener("click", collectData, true);
 setInterval(leadUp, 40);
@@ -170,6 +170,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 			expjson = JSON.stringify(exp);
 			download(expjson, 'mag.json', 'application/json');
 			window.location.href = nextPage;
+			return;
 		}
 	}
 	function recordCoords() {

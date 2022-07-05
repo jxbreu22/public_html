@@ -165,12 +165,11 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		y = pos.y;
 		exp += "click_x_y, " + x + ", " + y + "; ";
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
-		logClick();
+		//logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
 			expjson = JSON.stringify(exp);
 			download(expjson, 'mag.json', 'application/json');
 			window.location.href = nextPage;
-			return;
 		}
 	}
 	function recordCoords() {

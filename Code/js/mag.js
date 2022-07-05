@@ -35,8 +35,8 @@ function collectData() {
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
 	/*var exp = localStorage.getItem("data");
-	if(exp===null || exp===undefined) exp = row;
-	else exp+=row + "; ";
+	if(exp ===null || exp ===undefined) exp = row;
+	else exp +=row + "; ";
 	localStorage.setItem("data", exp);
 	alert(localStorage.getItem("data"));*/
 	//+ " mouseX: " + mouseX + " mouseY: " + mouseY);
@@ -183,7 +183,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		pos = getCursorPos(e);
 		x = pos.x;
 		y = pos.y;
-		exp += "click, " + x + ", " + y + "; ";
+		exp += "click_x_y, " + x + ", " + y + "; ";
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {

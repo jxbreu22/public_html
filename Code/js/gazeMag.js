@@ -157,8 +157,11 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 	/* move magnifier towards gaze coordinates */
 	setInterval(moveToGazeCoords, 30);
 	setInterval(recordCoords, 20);
-
+	var valid = new Date().getTime();
 	function checkClick(e) {
+		var valid2 = new Date().getTime();
+		if (valid2-valid<75) return;
+		valid = new Date().getTime();
 		var pos, x, y;
 		pos = getCursorPos(e);
 		x = pos.x;

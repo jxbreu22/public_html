@@ -38,7 +38,7 @@ function collectData() {
 	var row = "Time_gazex_y, " + time + ", " + gazeX + ", " + gazeY + "; ";//+ mouseX + ", " + mouseY + "; ";
 	console.log("Time: " + time + " EyeX: " + gazeX + " EyeY: " + gazeY);
 	exp += row;
-	expjson = JSON.stringify(exp);
+	//expjson = JSON.stringify(exp);
 	clicked = false;
 }
 document.onmousemove = handleMouseMove;
@@ -191,6 +191,7 @@ function magnify(imgID, doc, nextPage, btnCoords) {
 		//console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
 		logClick();
 		if ((x > btnCoords.x_lower) && (x < btnCoords.x_upper) && (y > btnCoords.y_lower) && (y < btnCoords.y_upper)) {
+			expjson = JSON.stringify(exp);
 			download(expjson, 'mag.json', 'application/json');
 			window.location.href = nextPage;
 		}
